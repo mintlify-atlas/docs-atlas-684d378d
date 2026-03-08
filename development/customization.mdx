@@ -1,0 +1,597 @@
+---
+title: Customization Guide
+description: How to customize and extend the Pacto Lúdico platform
+---
+
+## Overview
+
+Pacto Lúdico is designed to be easily customizable. This guide covers common customization scenarios including branding, content, functionality, and deployment.
+
+## Visual Customization
+
+### Branding & Colors
+
+<Steps>
+  <Step title="Update Color Scheme">
+    Replace the primary colors throughout the CSS files:
+    
+    **Primary Navigation & Buttons:** `#2D3E50`
+    ```css css/styleMenu.css
+    .nav li a {
+      background-color: #YOUR_COLOR;  /* Change from #2D3E50 */
+    }
+    
+    .category_list .ct_item-active {
+      background: #YOUR_COLOR;
+    }
+    ```
+    
+    **Category Accent:** `#E84C3D`
+    ```css css/styleMenu.css
+    .category_list .category_item {
+      background: #YOUR_ACCENT;  /* Change from #E84C3D */
+    }
+    ```
+  </Step>
+
+  <Step title="Replace Background Image">
+    Update the background image across all pages:
+    
+    1. Add your image to `img/` directory
+    2. Update CSS references:
+    
+    ```css
+    body {
+      background-image: url(../img/your-background.jpg);
+      background-size: cover;  /* Optional: make it responsive */
+      background-position: center;
+      background-attachment: fixed;
+    }
+    ```
+  </Step>
+
+  <Step title="Update Logo">
+    Replace the login logo:
+    
+    1. Replace `img/BOTON_INICIARSESION1.png` with your logo
+    2. Or update the reference in `index.html`:
+    
+    ```html index.html
+    <img src="img/your-logo.png">
+    ```
+    
+    Adjust size in CSS:
+    ```css css/styleIndex.css
+    img {
+      width: 250px;   /* Adjust width */
+      height: 100px;  /* Adjust height */
+    }
+    ```
+  </Step>
+
+  <Step title="Customize Typography">
+    Change fonts site-wide:
+    
+    ```css
+    @import url('https://fonts.googleapis.com/css2?family=Your+Font&display=swap');
+    
+    * {
+      font-family: 'Your Font', Arial, Helvetica, sans-serif;
+    }
+    ```
+  </Step>
+</Steps>
+
+### Layout Modifications
+
+<AccordionGroup>
+  <Accordion title="Adjust Product Grid Columns">
+    Change the number of products per row:
+    
+    ```css css/styleMenu.css
+    /* Default: 4 columns (25% width) */
+    .products-list .product-item {
+      width: 25%;  
+    }
+    
+    /* 3 columns */
+    .products-list .product-item {
+      width: 30%;  
+      margin-left: 3.33%;
+    }
+    
+    /* 5 columns */
+    .products-list .product-item {
+      width: 18%;
+      margin-left: 2.5%;
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Modify Category Sidebar Width">
+    Adjust the category sidebar size:
+    
+    ```css css/styleMenu.css
+    .category_list {
+      width: 20%;  /* Default: 20% */
+    }
+    
+    .products-list {
+      width: 80%;  /* Adjust to match: 100% - sidebar width */
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Change Container Spacing">
+    Modify top margin for content:
+    
+    ```css
+    .container {
+      margin-top: 100px;  /* Adjust spacing from navbar */
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Content Customization
+
+### Adding Game Categories
+
+<Steps>
+  <Step title="Create Image Directory">
+    Add a new folder under `img/Juegos/`:
+    
+    ```bash
+    mkdir "img/Juegos/Your Category Name"
+    ```
+  </Step>
+
+  <Step title="Add Category to Menu">
+    Update `app/MenuUser.html`:
+    
+    ```html
+    <div class="category_list">
+      <a href="#" class="category_item" category="all">Todo</a>
+      <!-- Existing categories... -->
+      <a href="#" class="category_item" category="YourCategory">Your Category Name</a>
+    </div>
+    ```
+  </Step>
+
+  <Step title="Add Games to Category">
+    Create product items with matching category attribute:
+    
+    ```html
+    <div class="product-item" category="YourCategory">
+      <img src="../img/Juegos/Your Category Name/game.jpg" alt="">
+      <a href="#modal21">Game Name</a>
+      
+      <!-- Modal -->
+      <div id="modal21" class="modalmask">
+        <div class="modalbox rotate">
+          <a href="#close" title="Close" class="close">X</a>
+          <h2>Game Name</h2>
+          <p>Game description here...</p>
+        </div>
+      </div>
+    </div>
+    ```
+  </Step>
+</Steps>
+
+### Updating the Calendar
+
+<Steps>
+  <Step title="Replace Calendar Image">
+    Update the monthly calendar:
+    
+    1. Create or download a calendar image
+    2. Save to `img/Calendario-Monthly.jpg`
+    3. Update reference in `app/MenuUser.html`:
+    
+    ```html
+    <img src="../img/Calendario-Monthly.jpg" class="Calendario">
+    ```
+  </Step>
+
+  <Step title="Implement Dynamic Calendar">
+    For a dynamic calendar, integrate a library like FullCalendar:
+    
+    ```html
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js'></script>
+    
+    <div id='calendar'></div>
+    
+    <script>
+      var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+        initialView: 'dayGridMonth',
+        events: [
+          { title: 'Game Night', date: '2026-03-15' },
+          { title: 'Tournament', date: '2026-03-22' }
+        ]
+      });
+      calendar.render();
+    </script>
+    ```
+  </Step>
+</Steps>
+
+## Functional Customization
+
+### Authentication System
+
+<Note>
+  The current authentication uses hardcoded credentials in `js/appIndex.js`. For production, integrate a real authentication system.
+</Note>
+
+<Tabs>
+  <Tab title="Firebase Auth">
+    Replace hardcoded login with Firebase Authentication:
+    
+    ```javascript js/appIndex.js
+    // Add Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "your-app.firebaseapp.com",
+      projectId: "your-project-id"
+    };
+    firebase.initializeApp(firebaseConfig);
+    
+    function inicio() {
+      const email = document.getElementById('user').value;
+      const password = document.getElementById('pass').value;
+      
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Redirect based on custom claims or user role
+          window.location = 'app/MenuUser.html';
+        })
+        .catch((error) => {
+          alert('Error: ' + error.message);
+        });
+    }
+    ```
+  </Tab>
+
+  <Tab title="Custom Backend">
+    Integrate with your own API:
+    
+    ```javascript js/appIndex.js
+    async function inicio() {
+      const email = document.getElementById('user').value;
+      const password = document.getElementById('pass').value;
+      
+      try {
+        const response = await fetch('https://your-api.com/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          localStorage.setItem('token', data.token);
+          window.location = data.role === 'admin' 
+            ? 'app/MenuAdmin.html' 
+            : 'app/MenuUser.html';
+        } else {
+          alert('Invalid credentials');
+        }
+      } catch (error) {
+        alert('Login failed: ' + error.message);
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Database Integration
+
+Replace static game list with dynamic data:
+
+<CodeGroup>
+```javascript Firebase Firestore
+// Load games from Firestore
+const db = firebase.firestore();
+
+db.collection('games').get().then((querySnapshot) => {
+  const productsList = document.querySelector('.products-list');
+  
+  querySnapshot.forEach((doc) => {
+    const game = doc.data();
+    
+    const gameHTML = `
+      <div class="product-item" category="${game.category}">
+        <img src="${game.image}" alt="${game.name}">
+        <a href="#modal-${doc.id}">${game.name}</a>
+        <div id="modal-${doc.id}" class="modalmask">
+          <div class="modalbox rotate">
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>${game.name}</h2>
+            <p>${game.description}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    productsList.innerHTML += gameHTML;
+  });
+});
+```
+
+```javascript REST API
+// Load games from REST API
+fetch('https://your-api.com/games')
+  .then(response => response.json())
+  .then(games => {
+    const productsList = document.querySelector('.products-list');
+    
+    games.forEach(game => {
+      const gameElement = document.createElement('div');
+      gameElement.className = 'product-item';
+      gameElement.setAttribute('category', game.category);
+      gameElement.innerHTML = `
+        <img src="${game.image}" alt="${game.name}">
+        <a href="#modal-${game.id}">${game.name}</a>
+        <!-- Modal markup -->
+      `;
+      
+      productsList.appendChild(gameElement);
+    });
+  });
+```
+</CodeGroup>
+
+### Navigation Menu
+
+Customize the navigation menu structure:
+
+```html app/MenuUser.html
+<ul class="nav">
+  <li><a href="#" onclick="goHome()">Home</a></li>
+  
+  <li><a href="#">Profile</a>
+    <ul>
+      <li><a href="Perfil.html">View Profile</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
+  </li>
+  
+  <li><a href="#">Community</a>
+    <ul>
+      <li><a href="friends.html">Friends</a></li>
+      <li><a href="groups.html">Groups</a></li>
+    </ul>
+  </li>
+  
+  <li><a href="contact.html">Contact</a></li>
+</ul>
+```
+
+## Deployment Customization
+
+### Custom Domain
+
+<Steps>
+  <Step title="Purchase Domain">
+    Register a domain from providers like:
+    - Google Domains
+    - Namecheap
+    - Cloudflare
+  </Step>
+
+  <Step title="Configure in Firebase">
+    ```bash
+    firebase hosting:channel:deploy production
+    ```
+    
+    Then add custom domain in Firebase Console.
+  </Step>
+
+  <Step title="Update DNS Records">
+    Point your domain to Firebase:
+    
+    | Type | Name | Value |
+    |------|------|-------|
+    | A | @ | 151.101.1.195 |
+    | A | @ | 151.101.65.195 |
+  </Step>
+</Steps>
+
+### Environment-Specific Configuration
+
+Create separate configurations for dev/staging/prod:
+
+```json .firebaserc
+{
+  "projects": {
+    "default": "pacto-ludico-prod",
+    "staging": "pacto-ludico-staging",
+    "dev": "pacto-ludico-dev"
+  }
+}
+```
+
+Deploy to specific environment:
+```bash
+firebase use staging
+firebase deploy
+```
+
+### Performance Optimization
+
+<AccordionGroup>
+  <Accordion title="Image Optimization">
+    Compress images before deployment:
+    
+    ```bash
+    # Using imagemagick
+    mogrify -resize 800x600 -quality 85 img/Juegos/**/*.jpg
+    ```
+    
+    Or use online tools:
+    - TinyPNG (https://tinypng.com)
+    - Squoosh (https://squoosh.app)
+  </Accordion>
+
+  <Accordion title="CSS Minification">
+    Minify CSS files for production:
+    
+    ```bash
+    # Using cssnano
+    npx cssnano css/styleMenu.css css/styleMenu.min.css
+    ```
+    
+    Update HTML references:
+    ```html
+    <link rel="stylesheet" href="../css/styleMenu.min.css">
+    ```
+  </Accordion>
+
+  <Accordion title="Lazy Loading Images">
+    Add lazy loading to product images:
+    
+    ```html
+    <img src="../img/Juegos/Cartas/Bang.png" 
+         alt="Bang" 
+         loading="lazy">
+    ```
+  </Accordion>
+
+  <Accordion title="CDN for Static Assets">
+    Host images on a CDN for better performance:
+    
+    ```html
+    <img src="https://cdn.yoursite.com/games/bang.jpg" alt="Bang">
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Advanced Customizations
+
+### Add Search Functionality
+
+Implement game search:
+
+```javascript
+const searchInput = document.querySelector('#searchInput');
+const products = document.querySelectorAll('.product-item');
+
+searchInput.addEventListener('input', (e) => {
+  const searchTerm = e.target.value.toLowerCase();
+  
+  products.forEach(product => {
+    const gameName = product.querySelector('a').textContent.toLowerCase();
+    
+    if (gameName.includes(searchTerm)) {
+      product.style.display = 'flex';
+    } else {
+      product.style.display = 'none';
+    }
+  });
+});
+```
+
+### User Collections
+
+Allow users to save favorite games:
+
+```javascript
+function toggleFavorite(gameId) {
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  
+  if (favorites.includes(gameId)) {
+    // Remove from favorites
+    const index = favorites.indexOf(gameId);
+    favorites.splice(index, 1);
+  } else {
+    // Add to favorites
+    favorites.push(gameId);
+  }
+  
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  updateFavoriteIcon(gameId);
+}
+```
+
+### Event Calendar Integration
+
+Replace static calendar with event management:
+
+```javascript
+function loadEvents() {
+  fetch('https://your-api.com/events')
+    .then(response => response.json())
+    .then(events => {
+      const eventsList = document.querySelector('#Div2');
+      eventsList.innerHTML = '<h6>Upcoming Events</h6>';
+      
+      events.forEach(event => {
+        eventsList.innerHTML += `
+          <div class="event-item">
+            <h4>${event.title}</h4>
+            <p>${event.date} - ${event.location}</p>
+            <button onclick="rsvp(${event.id})">RSVP</button>
+          </div>
+        `;
+      });
+    });
+}
+```
+
+## Testing Customizations
+
+<Steps>
+  <Step title="Test Locally">
+    Use Firebase local server:
+    
+    ```bash
+    firebase serve
+    ```
+    
+    Access at `http://localhost:5000`
+  </Step>
+
+  <Step title="Cross-Browser Testing">
+    Test in multiple browsers:
+    - Chrome
+    - Firefox
+    - Safari
+    - Edge
+  </Step>
+
+  <Step title="Mobile Testing">
+    Test responsive behavior:
+    - Chrome DevTools Device Mode
+    - Real mobile devices
+    - BrowserStack for comprehensive testing
+  </Step>
+
+  <Step title="Deploy to Staging">
+    Test in production-like environment:
+    
+    ```bash
+    firebase use staging
+    firebase deploy
+    ```
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Styling Guide" icon="palette" href="/development/styling">
+    Deep dive into CSS architecture
+  </Card>
+
+  <Card title="Firebase Setup" icon="fire" href="/development/firebase-setup">
+    Configure deployment options
+  </Card>
+
+  <Card title="Project Structure" icon="folder-tree" href="/development/project-structure">
+    Understand the codebase organization
+  </Card>
+</CardGroup>

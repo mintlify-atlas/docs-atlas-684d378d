@@ -1,80 +1,225 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: Quickstart Guide
+description: Get started with Pacto Lúdico in minutes - access the platform, login, and explore the board game catalog
 ---
 
-## Get started in three steps
+Welcome to Pacto Lúdico! This guide will help you get up and running with the platform quickly.
 
-Get your documentation site running locally and make your first customization.
+## Access the Platform
 
-### Step 1: Set up your local environment
+Pacto Lúdico is a web-based application that you can access through any modern browser. The platform provides a comprehensive interface for managing and exploring board game collections.
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
+<Steps>
+  <Step title="Open the Application">
+    Navigate to the Pacto Lúdico homepage in your web browser. You'll be greeted with the login page.
+  </Step>
+  
+  <Step title="Login to Your Account">
+    Enter your credentials to access the platform. The application supports both regular users and administrators.
+  </Step>
+  
+  <Step title="Explore the Game Catalog">
+    Once logged in, you can browse through the extensive collection of board games organized by category.
+  </Step>
+</Steps>
+
+## Login Process
+
+The login page provides a simple interface for accessing your account. Here's the HTML structure:
+
+```html
+<div id="DivIniciarSesion">
+    <p>
+        <input id="user" type="text" placeholder="Correo">
+    </p>
+    <p>
+        <input id="pass" type="password" placeholder="Contraseña">
+    </p>
+    <p>
+        <label id="RadioUserL" for="RadioUser" class="LabelUsado">Usuario</label>
+        <input type="radio" name="Acceso" id="RadioUser">
+        <label id="RadioAdminL" for="RadioAdmin">Administrador</label>
+        <input type="radio" name="Acceso" id="RadioAdmin">
+    </p>
+    <p>
+        <input type="button" class="btn btn-dark" onclick="inicio()" value="Ingresar">
+    </p>
+    <a href="app/Registrar.html">¿No se ha registrado? Registrese.</a>
+</div>
+```
+
+### Authentication Logic
+
+The login functionality is handled by JavaScript that validates credentials and redirects users based on their role:
+
+```javascript
+function inicio(){
+    if(user.value=="Ivan"&&pass.value=="war"&&RadioUser.checked){
+       window.location='app/MenuUser.html';
+    }else if(user.value=="Ivan"&&pass.value=="war"&&RadioAdmin.checked){
+        window.location='app/MenuAdmin.html';
+    }
+    // Error handling for invalid credentials
+    if(user.value!="Ivan"){
+        user.className="Error";
+    }
+    if(pass.value!="war"){
+        pass.className="Error";
+    }
+}
+```
+
+<Note>
+  The application distinguishes between regular users and administrators. Select the appropriate role when logging in.
+</Note>
+
+## Browsing the Game Catalog
+
+After logging in, you'll see the main menu with access to the game catalog. The interface includes:
+
+### Navigation Menu
+
+The top navigation bar provides quick access to key sections:
+
+```html
+<div id="header">
+    <ul class="nav">
+        <li><a href="" onclick="CambiarPagina()">Inicio</a></li>
+        <li><a href="" onclick="CambiarPagina()">Perfil</a>
+            <ul>
+                <li><a href="">Configuración</a></li>
+                <li><a href="">Datos personales</a></li>
+            </ul>
+        </li>
+        <li><a href="" onclick="CambiarPagina()">Acerca de</a></li>
+        <li><a href="" onclick="CambiarPagina()">Contacto</a></li>
+    </ul>
+</div>
+```
+
+### Game Categories
+
+Games are organized into multiple categories for easy browsing:
+
+<CardGroup cols={3}>
+  <Card title="Ameritrash" icon="dice">
+    Thematic games with high production values
+  </Card>
+  <Card title="Eurogames" icon="chess-board">
+    Strategy-focused games with elegant mechanics
+  </Card>
+  <Card title="Party Games" icon="users">
+    Fun games for large groups and social gatherings
+  </Card>
+  <Card title="Card Games" icon="cards">
+    Games primarily using cards as components
+  </Card>
+  <Card title="Dice Games" icon="dice-d20">
+    Games featuring dice as core mechanics
+  </Card>
+  <Card title="Role Playing" icon="dragon">
+    RPG systems like Dungeons & Dragons
+  </Card>
+</CardGroup>
+
+### Category Filter Implementation
+
+The category list is rendered in the user menu:
+
+```html
+<div class="category_list">
+    <a href="#" class="category_item" category="all">Todo</a>
+    <a href="#" class="category_item" category="Ameritrash">Ameritrash</a>
+    <a href="#" class="category_item" category="Cartas">Cartas</a>
+    <a href="#" class="category_item" category="Dados">Dados</a>
+    <a href="#" class="category_item" category="Eurogames">Eurogames</a>
+    <a href="#" class="category_item" category="Party">Party Games</a>
+    <a href="#" class="category_item" category="Rol">Rol</a>
+</div>
+```
+
+### Filtering Games by Category
+
+The filtering functionality uses jQuery to show/hide games dynamically:
+
+```javascript
+$('.category_item').click(function(){
+    var catProduct = $(this).attr('category');
     
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
+    // Add active class to selected category
+    $('.category_item').removeClass('ct_item-active');
+    $(this).addClass('ct_item-active');
     
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
+    // Hide all products with animation
+    $('.product-item').css('transform', 'scale(0)');
+    function hideProduct(){
+        $('.product-item').hide();
+    } setTimeout(hideProduct, 400);
     
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+    // Show filtered products
+    function showProduct(){
+        $('.product-item[category="'+catProduct+'"]').show();
+        $('.product-item[category="'+catProduct+'"]').css('transform', 'scale(1)');
+    } setTimeout(showProduct, 400);
+});
+```
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+## Viewing Game Details
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+Each game in the catalog can be clicked to view detailed information through modal windows:
 
-### Step 3: Go live
+```html
+<div class="product-item" category="Party">
+    <img src="../img/Juegos/Party Games/Monopoly.jpg" alt="">
+    <a href="#modal19">Monopoly</a>
+    
+    <!-- Modal window for game details -->
+    <div id="modal19" class="modalmask">
+        <div class="modalbox rotate">
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>Monopoly</h2>
+            <p>Game description and details...</p>
+        </div>
+    </div>
+</div>
+```
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+## Switching Between Views
 
-## Next steps
+The user menu allows switching between Games and Events views:
 
-Now that you have your docs running, explore these key features:
+```javascript
+function RevelarDiv1(){
+    Juegos.className="Superpuesto";
+    Eventos.className=Eventos.className+" Oculto";
+}
+
+function RevelarDiv2(){
+    Juegos.className=Juegos.className+" Oculto";
+    Eventos.className="Superpuesto";
+}
+```
+
+Buttons in the interface trigger these functions:
+
+```html
+<div class="row">
+    <button onclick="RevelarDiv1()" class="boton">Juegos</button>
+    <button onclick="RevelarDiv2()" class="boton">Eventos</button>
+</div>
+```
+
+## Next Steps
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Installation" icon="download" href="/installation">
+    Learn how to set up your own instance of Pacto Lúdico
+  </Card>
+  <Card title="User Guide" icon="book">
+    Explore advanced features and functionality
+  </Card>
 </CardGroup>
 
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+  New to the platform? Click the "¿No se ha registrado? Registrese." link on the login page to create your account.
 </Note>

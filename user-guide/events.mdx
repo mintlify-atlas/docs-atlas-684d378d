@@ -1,0 +1,340 @@
+---
+title: Events Calendar
+description: Discover and manage gaming events in the Pacto Lúdico community
+---
+
+The Events section of Pacto Lúdico helps users discover upcoming gaming sessions, tournaments, and community gatherings.
+
+## Accessing Events
+
+Events are accessible from the main user menu alongside the game catalog:
+
+<Steps>
+  <Step title="Navigate to Main Menu">
+    After logging in, you'll see the main menu with two primary options: Juegos (Games) and Eventos (Events).
+  </Step>
+  
+  <Step title="Click Events Button">
+    Click the "Eventos" button to reveal the events section:
+    
+    ```html
+    <button onclick="RevelarDiv2()" class="boton">Eventos</button>
+    ```
+  </Step>
+  
+  <Step title="View Event Listings">
+    Browse upcoming gaming events and community activities.
+  </Step>
+</Steps>
+
+## Event Interface
+
+The events section is implemented as a toggleable view in the main menu:
+
+```html
+<div class="row">
+    <button onclick="RevelarDiv1()" class="boton">Juegos</button>
+    <button onclick="RevelarDiv2()" class="boton">Eventos</button>
+</div>
+
+<!-- Events section -->
+<div id="Div2" class="Oculto">
+    <h6>Eventos proximos</h6>
+</div>
+```
+
+## Section Switching Logic
+
+The platform uses JavaScript to toggle between the Games catalog and Events view:
+
+```javascript
+var Juegos = document.getElementById('Div1');
+var Eventos = document.getElementById('Div2');
+
+function RevelarDiv1(){
+    Juegos.className = "Superpuesto";
+    Eventos.className = Eventos.className + " Oculto";
+}
+
+function RevelarDiv2(){
+    Juegos.className = Juegos.className + " Oculto";
+    Eventos.className = "Superpuesto";
+}
+```
+
+<Note>
+  The events section becomes visible when clicked, while the games catalog is hidden, providing a clean, focused view.
+</Note>
+
+## Calendar Integration
+
+Pacto Lúdico features a calendar widget in the sidebar for quick date reference:
+
+```html
+<div class="row">
+    <div class="col-3">
+        <img src="../img/Calendario-Mensual-Septiembre-2019.jpg" class="Calendario">
+    </div>
+    <div class="col-9">
+        <!-- Events content -->
+    </div>
+</div>
+```
+
+<CardGroup cols={2}>
+  <Card title="Monthly View" icon="calendar">
+    The calendar provides a monthly overview of dates, helping you plan your gaming sessions.
+  </Card>
+  
+  <Card title="Event Planning" icon="calendar-days">
+    Use the calendar alongside event listings to coordinate your participation in upcoming activities.
+  </Card>
+</CardGroup>
+
+## Event Types
+
+The Pacto Lúdico platform can host various types of gaming events:
+
+<Tabs>
+  <Tab title="Game Sessions">
+    **Regular Gaming Meetups**
+    
+    Community gatherings for casual board game play across all categories:
+    - Eurogames nights
+    - Party game sessions
+    - RPG campaigns
+    - Miniature battles
+    
+    <Tip>
+      Check the calendar regularly for recurring weekly or monthly game nights.
+    </Tip>
+  </Tab>
+  
+  <Tab title="Tournaments">
+    **Competitive Events**
+    
+    Organized tournaments for specific games:
+    - Strategy game championships
+    - Card game competitions
+    - War game scenarios
+    - Speed gaming challenges
+    
+    <Note>
+      Tournament events typically require pre-registration and may have specific rule sets.
+    </Note>
+  </Tab>
+  
+  <Tab title="Special Events">
+    **Community Activities**
+    
+    Special gaming events and celebrations:
+    - New game release parties
+    - Themed game nights
+    - Designer meet-and-greets
+    - Charity gaming marathons
+    
+    <Tip>
+      Special events are great opportunities to discover new games and meet fellow enthusiasts.
+    </Tip>
+  </Tab>
+</Tabs>
+
+## Event Information
+
+Each event listing typically includes:
+
+<Accordion title="Event Details">
+  **Essential Information**:
+  - Event title and description
+  - Date and time
+  - Location or venue
+  - Game(s) to be played
+  - Number of players needed
+  - Skill level requirements
+  - Registration status
+  
+  **Additional Details**:
+  - Event organizer
+  - Duration estimate
+  - Required materials
+  - Special instructions
+</Accordion>
+
+## Viewing Upcoming Events
+
+The events section displays upcoming activities with the heading:
+
+```html
+<h6>Eventos proximos</h6>
+```
+
+<Steps>
+  <Step title="Browse Event List">
+    Scroll through the list of upcoming events sorted by date.
+  </Step>
+  
+  <Step title="Review Event Details">
+    Click on any event to view complete information including game type, time, and participation requirements.
+  </Step>
+  
+  <Step title="Check Calendar">
+    Reference the sidebar calendar to see event dates in monthly context.
+  </Step>
+</Steps>
+
+## Event Categories
+
+Events can be filtered or organized by game category:
+
+<CardGroup cols={3}>
+  <Card title="Strategy" icon="chess">
+    Eurogames and Ameritrash events
+  </Card>
+  
+  <Card title="Social" icon="people-group">
+    Party games and casual gatherings
+  </Card>
+  
+  <Card title="Specialty" icon="hat-wizard">
+    RPG sessions, war games, and miniatures
+  </Card>
+  
+  <Card title="Classic" icon="dice">
+    Traditional games and dice-based events
+  </Card>
+  
+  <Card title="Cards" icon="cards">
+    Card game tournaments and sessions
+  </Card>
+  
+  <Card title="Mixed" icon="puzzle-piece">
+    Multi-game events and variety nights
+  </Card>
+</CardGroup>
+
+## Navigation Features
+
+The events page maintains full navigation capabilities:
+
+```html
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <div id="header">
+                    <ul class="nav">
+                        <li><a href="" onclick="CambiarPagina()">Inicio</a></li>
+                        <li><a href="" onclick="CambiarPagina()">Perfil</a></li>
+                        <li><a href="" onclick="CambiarPagina()">Acerca de</a></li>
+                        <li><a href="" onclick="CambiarPagina()">Contacto</a></li>
+                    </ul>
+                </div>
+            </ul>
+        </div>
+    </nav>
+</header>
+```
+
+## Search Functionality
+
+Use the search bar to find specific events:
+
+```html
+<form class="form-inline mt-2 mt-md-0">
+    <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Search">
+    <button id="BotonBuscar" class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+</form>
+```
+
+<Tip>
+  Search for events by game name, category, or date to quickly find activities that interest you.
+</Tip>
+
+## Event Planning Best Practices
+
+<Steps>
+  <Step title="Check Regularly">
+    Visit the events section frequently as new gaming sessions are added throughout the month.
+  </Step>
+  
+  <Step title="Review Requirements">
+    Always check event requirements including skill level, materials needed, and player count.
+  </Step>
+  
+  <Step title="Reference Calendar">
+    Use the calendar widget to plan your schedule and avoid conflicts.
+  </Step>
+  
+  <Step title="Explore Categories">
+    Try events from different game categories to expand your board gaming experience.
+  </Step>
+</Steps>
+
+## Responsive Design
+
+The events section uses Bootstrap's responsive grid system:
+
+```html
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <!-- Calendar sidebar -->
+        </div>
+        <div class="col-9">
+            <!-- Event content -->
+        </div>
+    </div>
+</div>
+```
+
+**Layout Behavior**:
+- **Desktop**: Calendar in sidebar, events in main area
+- **Tablet**: Maintained two-column layout
+- **Mobile**: Stacked layout with calendar above events
+
+## Integration with Game Catalog
+
+Events are closely integrated with the game catalog:
+
+<Accordion title="Event-Catalog Connection">
+  - Events showcase games from the catalog
+  - Click game names in events to view catalog details
+  - Game categories match between events and catalog
+  - Discover new games through event participation
+  
+  ```javascript
+  // Toggle between games and events
+  function RevelarDiv1(){ /* Show Games */ }
+  function RevelarDiv2(){ /* Show Events */ }
+  ```
+</Accordion>
+
+## Community Engagement
+
+<CardGroup cols={2}>
+  <Card title="Meet Players" icon="handshake">
+    Events provide opportunities to connect with other board game enthusiasts in the community.
+  </Card>
+  
+  <Card title="Learn Games" icon="graduation-cap">
+    Participate in events to learn new games from experienced players.
+  </Card>
+  
+  <Card title="Share Experiences" icon="comments">
+    Join gaming sessions to share your passion and knowledge with others.
+  </Card>
+  
+  <Card title="Build Collection" icon="book-bookmark">
+    Discover games at events before adding them to your personal collection.
+  </Card>
+</CardGroup>
+
+<Warning>
+  Always confirm event details, including date, time, and location, before attending. Event information may be updated by organizers.
+</Warning>
+
+## Related Pages
+
+- [Game Catalog](/user-guide/game-catalog) - Browse games featured in events
+- [Categories](/user-guide/categories) - Learn about game types for events
+- [Profile Management](/user-guide/profile-management) - Manage event notifications

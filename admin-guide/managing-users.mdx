@@ -1,0 +1,272 @@
+---
+title: Managing Users
+description: User administration, viewing user lists, and managing user accounts in Pacto Lúdico
+---
+
+The user management system provides administrators with tools to view, monitor, and manage user accounts on the Pacto Lúdico platform.
+
+## Accessing User Management
+
+<Steps>
+  <Step title="Navigate to Admin Dashboard">
+    Access the admin menu at `/app/MenuAdmin.html`
+  </Step>
+  <Step title="Click Consultar Usuarios">
+    Select the **Consultar Usuarios** button to reveal the user management interface
+  </Step>
+</Steps>
+
+## User Management Interface
+
+The user management section is toggled using the `RevelarDiv3()` function:
+
+```javascript
+function RevelarDiv3(){
+    Juegos.className=Juegos.className+" Oculto";
+    Eventos.className=Eventos.className+" Oculto";
+    Usuarios.className="Superpuesto";
+    InsercionDeJuegos.className=InsercionDeJuegos.className+" Oculto";
+}
+```
+
+When activated, it displays:
+
+```html
+<div id="Div3" class="Superpuesto Oculto">
+    Lista de Usuariooos
+</div>
+```
+
+## User Roles
+
+Pacto Lúdico supports two primary user roles:
+
+<CardGroup cols={2}>
+  <Card title="Administrator" icon="shield">
+    Full access to admin dashboard, game management, event management, and user administration
+  </Card>
+  <Card title="Regular User" icon="user">
+    Access to user menu, game browsing, event viewing, and profile management
+  </Card>
+</CardGroup>
+
+## User Profile Structure
+
+User profiles contain the following information fields:
+
+### Personal Information
+
+The profile page (`Perfil.html`) collects these user details:
+
+```html
+<div class="row">
+  <div class="col">
+    <h6>Primer Nombre</h6>
+    <input type="text" class="form-control">
+  </div>
+  <div class="col">
+    <h6>Segundo Nombre</h6>
+    <input type="text" class="form-control">
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <h6>Primer Apellido</h6>
+    <input type="text" class="form-control">
+  </div>
+  <div class="col">
+    <h6>Segundo Apellido</h6>
+    <input type="text" class="form-control">
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <h6>Correo electronico</h6>
+    <input type="text" class="form-control">
+  </div>
+  <div class="col">
+    <h6>Contraseña</h6>
+    <input type="text" class="form-control">
+  </div>
+</div>
+```
+
+### Profile Sections
+
+User profiles are organized into two main tabs:
+
+<Tabs>
+  <Tab title="Información">
+    Contains user's personal details:
+    - First name (Primer Nombre)
+    - Second name (Segundo Nombre)
+    - First surname (Primer Apellido)
+    - Second surname (Segundo Apellido)
+    - Email address (Correo electronico)
+    - Password (Contraseña)
+  </Tab>
+  <Tab title="Notificaciones">
+    Displays user notifications and alerts
+  </Tab>
+</Tabs>
+
+## Profile Tab Navigation
+
+The profile interface uses the same toggle system as the admin dashboard:
+
+```javascript
+function RevelarDiv1(){ // Show Information
+    // Information tab becomes visible
+}
+
+function RevelarDiv2(){ // Show Notifications
+    // Notifications tab becomes visible
+}
+```
+
+Profile buttons:
+```html
+<button onclick="RevelarDiv1()" class="boton">Información</button>
+<button onclick="RevelarDiv2()" class="boton">Notificaciones</button>
+```
+
+## User Navigation Options
+
+Both regular users and administrators can navigate between views:
+
+```javascript
+function CambiarPagina(){
+    var text = select.options[select.selectedIndex].innerText;
+    if(text=="Perfil"){
+        window.location='../app/Perfil.html';
+    }else if(text=="Menú"){
+        window.location='../app/MenuUser.html';
+    }
+}
+```
+
+The dropdown selector provides quick access:
+- **Perfil**: Navigate to user profile page
+- **Menú**: Return to main menu (User or Admin depending on role)
+
+<Note>
+The `CambiarPagina()` function is triggered when users select an option and click the navigation button.
+</Note>
+
+## User vs Admin Menu
+
+The system maintains separate interfaces for different user roles:
+
+| Feature | Admin Menu | User Menu |
+|---------|------------|------------|
+| File | `/app/MenuAdmin.html` | `/app/MenuUser.html` |
+| Label Display | "Administrador" | "Usuario" |
+| Game Management | Full access | View only |
+| Event Management | Create/Edit | View only |
+| User Management | Full access | Own profile only |
+| Add Games | Yes | No |
+
+## User Menu Features
+
+Regular users have access to:
+
+### Navigation Menu
+
+```html
+<ul class="nav">
+    <li><a href="">Inicio</a></li>
+    <li><a href="">Perfil</a>
+        <ul>
+            <li><a href="">Configuración</a></li>
+            <li><a href="">Datos personales</a></li>
+        </ul>
+    </li>
+    <li><a href="">Acerca de</a>
+        <ul>
+            <li><a href="">Submenu1</a></li>
+            <li><a href="">Submenu2</a></li>
+        </ul>
+    </li>
+    <li><a href="">Contacto</a></li>
+</ul>
+```
+
+### User Dashboard Sections
+
+<CardGroup cols={2}>
+  <Card title="Juegos" icon="gamepad">
+    Browse game catalog with category filters (read-only)
+  </Card>
+  <Card title="Eventos" icon="calendar">
+    View upcoming gaming events
+  </Card>
+</CardGroup>
+
+## User List Management
+
+<Warning>
+The user list interface (`Lista de Usuariooos`) is accessible only to administrators through the **Consultar Usuarios** section.
+</Warning>
+
+### Viewing User Lists
+
+Administrators can:
+- View all registered users
+- Access user profile information
+- Monitor user activity
+- Manage user accounts
+
+## Search Functionality
+
+Both user and admin interfaces include search capability:
+
+```html
+<input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Search">
+<button id="BotonBuscar" class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+```
+
+Use the search bar to quickly find:
+- User accounts by name or email
+- Games in the catalog
+- Events in the calendar
+
+## Profile Management Best Practices
+
+<Steps>
+  <Step title="Regular Updates">
+    Encourage users to keep their profile information current
+  </Step>
+  <Step title="Password Security">
+    Ensure users maintain secure passwords
+  </Step>
+  <Step title="Email Verification">
+    Verify email addresses for account security
+  </Step>
+  <Step title="Privacy">
+    Respect user data and privacy settings
+  </Step>
+</Steps>
+
+<Note>
+Profile information is displayed and edited through Bootstrap form controls, providing a responsive and user-friendly interface.
+</Note>
+
+## User Interface Components
+
+The user management system leverages Bootstrap 4.3.1 components:
+
+- **Form Controls**: Text inputs for user data
+- **Navigation**: Dropdown selectors and menus
+- **Grid System**: Responsive column layouts
+- **Buttons**: Action triggers for navigation and form submission
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="Admin Overview" href="/admin-guide/overview">
+    Learn about the admin dashboard structure
+  </Card>
+  <Card title="Managing Events" href="/admin-guide/managing-events">
+    Manage user event participation
+  </Card>
+</CardGroup>

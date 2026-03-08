@@ -1,0 +1,393 @@
+---
+title: Installation & Setup
+description: Complete guide to installing and deploying Pacto Lúdico with Firebase hosting
+---
+
+This guide will walk you through setting up Pacto Lúdico on your local machine and deploying it to Firebase hosting.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Node.js (v12 or higher)
+- npm or yarn package manager
+- Firebase CLI tools
+- A modern web browser
+- Git (for version control)
+
+<Note>
+  Pacto Lúdico is a frontend web application built with HTML, CSS, and JavaScript. No backend server is required for basic functionality.
+</Note>
+
+## Project Structure
+
+Understanding the project structure will help you navigate and customize the application:
+
+```bash
+pacto-ludico/
+├── app/                    # Application pages
+│   ├── MenuUser.html      # User menu interface
+│   ├── MenuAdmin.html     # Admin menu interface
+│   └── Perfil.html        # User profile page
+├── css/                    # Stylesheets
+│   ├── styleIndex.css     # Login page styles
+│   ├── styleMenu.css      # Menu page styles
+│   └── stylePerfil.css    # Profile page styles
+├── img/                    # Images and assets
+│   ├── Juegos/            # Game cover images
+│   ├── Usuario.png        # User icon
+│   └── ...
+├── js/                     # JavaScript files
+│   ├── appIndex.js        # Login functionality
+│   ├── appMenu.js         # Menu navigation logic
+│   ├── script.js          # Game filtering logic
+│   └── jquery-3.2.1.js    # jQuery library
+├── index.html             # Login page (entry point)
+├── Registrar.html         # Registration page
+├── 404.html               # Error page
+├── firebase.json          # Firebase configuration
+└── .firebaserc            # Firebase project settings
+```
+
+## Installation Steps
+
+<Steps>
+  <Step title="Clone the Repository">
+    First, clone the Pacto Lúdico repository to your local machine:
+    
+    ```bash
+    git clone <repository-url>
+    cd pacto-ludico
+    ```
+  </Step>
+  
+  <Step title="Install Firebase CLI">
+    If you haven't already, install the Firebase CLI globally:
+    
+    ```bash
+    npm install -g firebase-tools
+    ```
+    
+    Verify the installation:
+    
+    ```bash
+    firebase --version
+    ```
+  </Step>
+  
+  <Step title="Login to Firebase">
+    Authenticate with your Firebase account:
+    
+    ```bash
+    firebase login
+    ```
+    
+    This will open a browser window for you to sign in with your Google account.
+  </Step>
+  
+  <Step title="Review Firebase Configuration">
+    The project includes a `firebase.json` configuration file:
+    
+    ```json
+    {
+      "hosting": {
+        "public": "",
+        "ignore": [
+          "firebase.json",
+          "**/.*",
+          "**/node_modules/**"
+        ]
+      }
+    }
+    ```
+    
+    This configuration sets the hosting directory and specifies files to ignore during deployment.
+  </Step>
+</Steps>
+
+## Firebase Setup
+
+### Creating a Firebase Project
+
+If you're setting up a new Firebase project:
+
+<Steps>
+  <Step title="Initialize Firebase">
+    Run the Firebase initialization command:
+    
+    ```bash
+    firebase init
+    ```
+  </Step>
+  
+  <Step title="Select Hosting">
+    When prompted, select "Hosting" from the list of Firebase features.
+  </Step>
+  
+  <Step title="Configure Public Directory">
+    Set the public directory to the root of your project (or press Enter to use current directory).
+  </Step>
+  
+  <Step title="Single-Page Application">
+    When asked if this is a single-page application, select "No" since Pacto Lúdico uses multiple HTML pages.
+  </Step>
+</Steps>
+
+### Project Configuration
+
+The `.firebaserc` file contains your Firebase project configuration:
+
+```json
+{
+  "projects": {
+    "default": "programacionweb2019-b79ba"
+  }
+}
+```
+
+<Note>
+  Replace `programacionweb2019-b79ba` with your own Firebase project ID when setting up a new instance.
+</Note>
+
+## Local Development
+
+To run Pacto Lúdico locally for development:
+
+### Option 1: Firebase Emulator (Recommended)
+
+```bash
+firebase serve
+```
+
+This will start a local server, typically at `http://localhost:5000`.
+
+### Option 2: Simple HTTP Server
+
+Alternatively, use Python's built-in HTTP server:
+
+```bash
+# Python 3
+python -m http.server 8000
+
+# Python 2
+python -m SimpleHTTPServer 8000
+```
+
+Or use Node.js with `http-server`:
+
+```bash
+npx http-server -p 8000
+```
+
+Then navigate to `http://localhost:8000` in your browser.
+
+<Note>
+  The application requires a web server to function properly. Simply opening the HTML files directly in a browser may not work due to CORS restrictions.
+</Note>
+
+## Dependencies
+
+Pacto Lúdico uses the following external libraries loaded via CDN:
+
+### Bootstrap 4.3.1
+
+For responsive layout and UI components:
+
+```html
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+      crossorigin="anonymous">
+```
+
+### jQuery
+
+For DOM manipulation and event handling:
+
+```html
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+        crossorigin="anonymous"></script>
+```
+
+### Popper.js
+
+For tooltip and popover positioning:
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+        crossorigin="anonymous"></script>
+```
+
+### Firebase SDK
+
+For potential backend integration:
+
+```html
+<script src="/__/firebase/7.1.0/firebase-app.js"></script>
+```
+
+<Note>
+  All dependencies are loaded from CDNs, so no local installation is required. However, ensure you have an internet connection when developing.
+</Note>
+
+## Deployment
+
+### Deploy to Firebase Hosting
+
+<Steps>
+  <Step title="Build Verification">
+    Before deploying, verify that all files are in place and the application works locally.
+  </Step>
+  
+  <Step title="Deploy Command">
+    Run the Firebase deploy command:
+    
+    ```bash
+    firebase deploy
+    ```
+    
+    This will upload all files to Firebase hosting.
+  </Step>
+  
+  <Step title="Access Your Site">
+    After deployment completes, Firebase will provide a hosting URL:
+    
+    ```
+    Hosting URL: https://your-project-id.web.app
+    ```
+    
+    Visit this URL to access your deployed application.
+  </Step>
+</Steps>
+
+### Deploy Specific Hosting Only
+
+If you only want to deploy hosting (and not other Firebase features):
+
+```bash
+firebase deploy --only hosting
+```
+
+### Deploy Preview
+
+Create a preview channel for testing before going live:
+
+```bash
+firebase hosting:channel:deploy preview
+```
+
+## Configuration Options
+
+### Customizing the Login Page
+
+The login functionality is in `js/appIndex.js`. To customize authentication:
+
+```javascript
+var user = document.getElementById('user');
+var pass = document.getElementById('pass');
+var Radio = document.getElementsByName('Acceso');
+var RadioUser = Radio[0];
+var RadioAdmin = Radio[1];
+
+function inicio(){
+    // Customize validation logic here
+    if(user.value=="Ivan" && pass.value=="war" && RadioUser.checked){
+       window.location='app/MenuUser.html';
+    }
+}
+```
+
+<Note>
+  The current implementation uses hardcoded credentials for demonstration. In production, integrate with Firebase Authentication or another secure authentication service.
+</Note>
+
+### Adding New Game Categories
+
+To add a new category to the game catalog, update both the HTML and ensure your game items have the matching category attribute:
+
+```html
+<!-- Add to category list in MenuUser.html -->
+<div class="category_list">
+    <a href="#" class="category_item" category="YourNewCategory">Category Name</a>
+</div>
+
+<!-- Add game items with matching category -->
+<div class="product-item" category="YourNewCategory">
+    <img src="../img/Juegos/YourCategory/game.jpg" alt="">
+    <a href="#modal">Game Name</a>
+</div>
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Page not loading after deployment">
+    Verify that your `firebase.json` has the correct `public` directory setting. If you're serving from the root, set it to `"public": ""`.
+  </Accordion>
+  
+  <Accordion title="Images not displaying">
+    Check that image paths are relative and correct. Firebase hosting serves files from the public directory root.
+  </Accordion>
+  
+  <Accordion title="JavaScript not working">
+    Ensure all script files are loaded in the correct order. jQuery must be loaded before scripts that depend on it.
+  </Accordion>
+  
+  <Accordion title="Login not redirecting">
+    Verify that the paths in `appIndex.js` are correct relative to your file structure:
+    ```javascript
+    window.location='app/MenuUser.html';
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Version Control
+
+The project includes a `.gitignore` file configured for Firebase projects:
+
+```gitignore
+# Firebase cache
+.firebase/
+
+# Logs
+logs
+*.log
+firebase-debug.log*
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+```
+
+This ensures that build artifacts and sensitive files are not committed to version control.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart Guide" icon="rocket" href="/quickstart">
+    Learn how to use the platform
+  </Card>
+  <Card title="Customization Guide" icon="palette">
+    Customize the look and feel of your instance
+  </Card>
+  <Card title="Firebase Documentation" icon="book" href="https://firebase.google.com/docs/hosting">
+    Explore Firebase Hosting features
+  </Card>
+  <Card title="Bootstrap Docs" icon="bootstrap" href="https://getbootstrap.com/docs/4.3/">
+    Learn about Bootstrap components
+  </Card>
+</CardGroup>
+
+## Production Considerations
+
+<Warning>
+  Before deploying to production, ensure you:
+  - Replace hardcoded authentication with a secure authentication system
+  - Configure proper Firebase security rules
+  - Optimize images for web delivery
+  - Enable HTTPS (automatically handled by Firebase Hosting)
+  - Set up proper error handling and logging
+</Warning>

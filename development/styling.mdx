@@ -1,0 +1,504 @@
+---
+title: Styling Guide
+description: CSS architecture, design patterns, and styling conventions in Pacto Lúdico
+---
+
+## Overview
+
+Pacto Lúdico uses a modular CSS architecture with page-specific stylesheets. The design leverages Bootstrap 4 for layout and custom CSS for branding and specialized components.
+
+## CSS Architecture
+
+<CardGroup cols={3}>
+  <Card title="styleIndex.css" icon="lock">
+    Login page styles with form validation states
+  </Card>
+
+  <Card title="styleMenu.css" icon="grid-2">
+    Main application UI: navigation, catalog, modals
+  </Card>
+
+  <Card title="stylePerfil.css" icon="user">
+    Profile page styles
+  </Card>
+</CardGroup>
+
+## Design System
+
+### Color Palette
+
+<CodeGroup>
+```css Primary Colors
+/* Navigation & Buttons */
+#2D3E50  /* Dark blue-gray - Primary UI elements */
+
+/* Accent */
+#E84C3D  /* Red - Category items */
+
+/* Status Colors */
+aqua      /* Highlights and active states */
+brown     /* Error states and labels */
+blueviolet /* Headings on login page */
+aliceblue  /* Active labels */
+```
+
+```css Transparency
+/* Overlays */
+rgba(0, 0, 0, 0.8)  /* Modal masks */
+rgba(0, 0, 0, 0.8)  /* Content overlays */
+```
+</CodeGroup>
+
+### Typography
+
+```css
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+label {
+  color: rgb(87, 83, 82);  /* Login page */
+  color: white;             /* Menu page */
+  font-size: 30px;          /* User labels on menu */
+}
+
+h2 {
+  text-align: center;
+  text-transform: uppercase;
+}
+```
+
+## Component Styles
+
+### Navigation Menu
+
+The navigation uses a custom dropdown menu system:
+
+```css
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+#header {
+  margin: auto;
+  width: 500px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+.nav > li {
+  float: left;
+}
+
+.nav li a {
+  background-color: #2D3E50;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 12px;
+  display: block;
+}
+
+.nav li a:hover {
+  background-color: white;
+  color: black;
+}
+
+.nav li ul {
+  display: none;
+  position: absolute;
+  min-width: 140px;
+}
+
+.nav li:hover > ul {
+  display: block;
+}
+
+.nav li ul li {
+  position: relative;
+}
+
+.nav li ul li ul {
+  right: -140px;
+  top: 0px;
+}
+```
+
+**Features:**
+- Horizontal top-level menu
+- Dropdown on hover
+- Multi-level nested menus
+- Color inversion on hover
+
+### Product Grid System
+
+Flexbox-based layout for the game catalog:
+
+```css
+.wrap {
+  max-width: 2000px;
+  width: 100%;
+  margin: auto;
+}
+
+.store-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Category sidebar */
+.category_list {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.category_list .category_item {
+  display: block;
+  width: 90%;
+  padding: 15px 0;
+  margin-bottom: 20px;
+  background: #E84C3D;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+}
+
+.category_list .ct_item-active {
+  background: #2D3E50;
+}
+
+/* Product grid */
+.products-list {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.products-list .product-item {
+  width: 25%;
+  margin-left: 5%;
+  margin-bottom: 30px;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-start;
+  transition: all .1s;
+}
+
+.products-list .product-item img {
+  width: 100%;
+  height: 100px;
+}
+
+.products-list .product-item a {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  background: #2D3E50;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+}
+```
+
+**Layout:**
+- 20% sidebar for categories
+- 80% main area for products
+- 25% width per product (4 columns)
+- Flexbox for responsive wrapping
+
+### Modal Windows
+
+CSS-only modals using `:target` pseudo-class:
+
+```css
+.modalmask {
+  position: fixed;
+  color: white;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 99999;
+  opacity: 0;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+}
+
+.modalmask:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+```
+
+**How it works:**
+1. Modals are invisible by default (`opacity: 0`, `pointer-events: none`)
+2. Clicking a link with `href="#modal1"` triggers `:target`
+3. Modal fades in with opacity transition
+4. Close button links to `href="#close"` to untarget
+
+### Form Validation States
+
+Visual feedback for form inputs:
+
+```css
+/* Error states */
+.Error {
+  border-color: brown;
+}
+
+.ErrorLabel {
+  color: brown;
+}
+
+/* Active states */
+.LabelUsado {
+  color: aliceblue;
+}
+```
+
+**Usage in JavaScript:**
+```javascript
+// Add error styling
+if (user.value != "Ivan") {
+  user.className = "Error";
+} else {
+  user.className = "";
+}
+```
+
+### Utility Classes
+
+```css
+/* Visibility */
+.Oculto {
+  visibility: hidden;
+}
+
+/* Overlays */
+.Superpuesto {
+  position: absolute;
+  left: 10px;
+  width: 100%;
+  top: 60px;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Page title */
+.titulo {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  background: #2D3E50;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Action button */
+.boton {
+  display: block;
+  width: 30%;
+  padding: 8px 0;
+  margin-bottom: 20px;
+  background: #2D3E50;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+}
+```
+
+## Bootstrap Integration
+
+Pacto Lúdico uses Bootstrap 4.3.1 from CDN:
+
+```html
+<link rel="stylesheet" 
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+      crossorigin="anonymous">
+```
+
+**Bootstrap Components Used:**
+- `.container` - Responsive container with margins
+- `.navbar` - Top navigation bar
+- `.btn`, `.btn-dark`, `.btn-outline-success` - Buttons
+- `.form-control` - Form inputs
+- `.row`, `.col-*` - Grid system
+
+### Grid System Example
+
+```html
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <!-- Calendar (25% width) -->
+    </div>
+    <div class="col-9">
+      <!-- Main content (75% width) -->
+    </div>
+  </div>
+</div>
+```
+
+## Background Images
+
+All pages use the same background:
+
+```css
+body {
+  background-image: url(../img/fondito1.jpg);
+  background-repeat: no-repeat;  /* Only on login page */
+}
+```
+
+<Note>
+  The background image path uses relative URLs (`../img/`). Ensure image files are correctly placed in the `img/` directory.
+</Note>
+
+## Responsive Behavior
+
+### Container Spacing
+
+```css
+.container {
+  margin-top: 100px;  /* Menu page */
+  margin-top: 150px;  /* Login & Profile pages */
+}
+```
+
+### Image Sizing
+
+```css
+/* User avatar */
+.Usuario {
+  height: 50px;
+  width: 50px;
+}
+
+/* Calendar - Responsive */
+.Calendario {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Calendar - Fixed (Profile) */
+.Calendario {
+  height: 200px;
+  width: 180px;
+}
+```
+
+## CSS Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Page-Specific Styles" icon="file-code">
+    Each page loads only its required CSS file, reducing load times.
+  </Card>
+
+  <Card title="Utility Classes" icon="toolbox">
+    Reusable classes like `.Oculto` and `.Superpuesto` avoid code duplication.
+  </Card>
+
+  <Card title="BEM-like Naming" icon="tag">
+    Classes like `.category_list` and `.product-item` clearly indicate component relationships.
+  </Card>
+
+  <Card title="Consistent Colors" icon="palette">
+    `#2D3E50` and `#E84C3D` create visual consistency across the application.
+  </Card>
+</CardGroup>
+
+## Common Patterns
+
+### Show/Hide Content
+
+```javascript
+function RevelarDiv1() {
+  Juegos.className = "Superpuesto";
+  Eventos.className = Eventos.className + " Oculto";
+}
+```
+
+Toggle between `.Superpuesto` (visible overlay) and `.Oculto` (hidden).
+
+### Category Filtering
+
+JavaScript dynamically shows/hides products based on category:
+
+```javascript
+// Implemented in script.js
+$('.category_item').click(function() {
+  var category = $(this).attr('category');
+  
+  $('.product-item').each(function() {
+    if (category == 'all' || $(this).attr('category') == category) {
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
+  });
+});
+```
+
+## Customization Guide
+
+<Steps>
+  <Step title="Change Color Scheme">
+    Update primary colors in CSS files:
+    
+    ```css
+    /* Find and replace */
+    #2D3E50 → Your primary color
+    #E84C3D → Your accent color
+    ```
+  </Step>
+
+  <Step title="Modify Layout">
+    Adjust grid percentages:
+    
+    ```css
+    .category_list { width: 20%; }  /* Sidebar */
+    .products-list { width: 80%; }  /* Main area */
+    ```
+  </Step>
+
+  <Step title="Update Typography">
+    Change font family globally:
+    
+    ```css
+    * {
+      font-family: 'Your Font', Arial, sans-serif;
+    }
+    ```
+  </Step>
+
+  <Step title="Add Custom Components">
+    Follow the naming convention:
+    
+    ```css
+    .component-name { }
+    .component_variant { }
+    ```
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Customization" icon="paintbrush" href="/development/customization">
+    Learn how to customize the entire platform
+  </Card>
+
+  <Card title="Project Structure" icon="folder-tree" href="/development/project-structure">
+    Review the file organization
+  </Card>
+</CardGroup>

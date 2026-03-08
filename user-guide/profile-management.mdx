@@ -1,0 +1,296 @@
+---
+title: Profile Management
+description: Manage your personal information, settings, and notifications in Pacto Lúdico
+---
+
+The Profile section allows users to manage their personal information and view notifications from the Pacto Lúdico platform.
+
+## Accessing Your Profile
+
+The profile page is accessible through the navigation menu after logging in:
+
+<Steps>
+  <Step title="Navigate to Profile">
+    Access the profile through the dropdown menu in the navigation bar:
+    
+    ```html
+    <ul class="nav">
+        <li><a href="" onclick="CambiarPagina()">Perfil</a>
+            <ul>
+                <li><a href="">Configuración</a></li>
+                <li><a href="">Datos personales</a></li>
+            </ul>
+        </li>
+    </ul>
+    ```
+  </Step>
+  
+  <Step title="Select Option">
+    Choose between viewing your profile information or switching back to the main menu using the dropdown selector.
+  </Step>
+</Steps>
+
+## Profile Interface
+
+The profile page (`Perfil.html`) features a clean layout with two main sections:
+
+<Tabs>
+  <Tab title="Información (Information)">
+    Manage your personal details and account settings.
+  </Tab>
+  
+  <Tab title="Notificaciones (Notifications)">
+    View system notifications and updates.
+  </Tab>
+</Tabs>
+
+## Page Structure
+
+```html
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <img src="../img/Calendario-Mensual-Septiembre-2019.jpg" class="Calendario">
+        </div>
+        <div class="col-9">
+            <button onclick="RevelarDiv1()" class="boton">Información</button>
+            <button onclick="RevelarDiv2()" class="boton">Notificaciones</button>
+            
+            <!-- Content sections -->
+        </div>
+    </div>
+</div>
+```
+
+## Personal Information Section
+
+The Information tab allows you to manage your personal details:
+
+<CardGroup cols={2}>
+  <Card title="Name Fields" icon="user">
+    **First Name** (Primer Nombre)
+    
+    **Second Name** (Segundo Nombre)
+    
+    Input fields for managing your full name.
+  </Card>
+  
+  <Card title="Surname Fields" icon="id-card">
+    **First Surname** (Primer Apellido)
+    
+    **Second Surname** (Segundo Apellido)
+    
+    Complete your identity information.
+  </Card>
+  
+  <Card title="Email" icon="envelope">
+    **Email Address** (Correo electrónico)
+    
+    Update your contact email for account access and notifications.
+  </Card>
+  
+  <Card title="Password" icon="lock">
+    **Password** (Contraseña)
+    
+    Change your account password for security.
+  </Card>
+</CardGroup>
+
+### Information Form Layout
+
+```html
+<div id="Div1" class="Superpuesto">
+    <div class="row">
+        <div class="col">
+            <h6>Primer Nombre</h6>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col">
+            <h6>Segundo Nombre</h6>
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h6>Primer Apellido</h6>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col">
+            <h6>Segundo Apellido</h6>
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h6>Correo electronico</h6>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col">
+            <h6>Contraseña</h6>
+            <input type="text" class="form-control">
+        </div>
+    </div>
+</div>
+```
+
+<Note>
+  All personal information fields use Bootstrap's form-control styling for consistent appearance and responsive behavior.
+</Note>
+
+## Notifications Section
+
+The Notifications tab displays system messages and updates:
+
+```html
+<div id="Div2" class="Oculto">
+    <h6>Notificaciones</h6>
+</div>
+```
+
+<Accordion title="Notification Types">
+  The notifications section is designed to show:
+  - Event updates and reminders
+  - New game additions to the catalog
+  - System announcements
+  - Profile activity alerts
+</Accordion>
+
+## Section Switching Logic
+
+The profile page uses JavaScript to toggle between Information and Notifications:
+
+```javascript
+var Juegos = document.getElementById('Div1');
+var Eventos = document.getElementById('Div2');
+
+function RevelarDiv1(){
+    Juegos.className = "Superpuesto";
+    Eventos.className = Eventos.className + " Oculto";
+}
+
+function RevelarDiv2(){
+    Juegos.className = Juegos.className + " Oculto";
+    Eventos.className = "Superpuesto";
+}
+```
+
+<Note>
+  Only one section is visible at a time, with the active section showing the "Superpuesto" class and the inactive section receiving the "Oculto" (hidden) class.
+</Note>
+
+## Navigation Options
+
+The profile page includes a dropdown menu for quick navigation:
+
+```html
+<select name="Opciones" id="Opciones">
+    <option value="1">Menú</option>
+    <option value="2">Perfil</option>
+</select>
+<button onclick="CambiarPagina()" id="OpcionesBoton">
+    <img src="../img/Opciones.png">
+</button>
+```
+
+### Page Switching Function
+
+```javascript
+function CambiarPagina(){
+    var text = select.options[select.selectedIndex].innerText;
+    if(text == "Perfil"){
+        window.location = '../app/Perfil.html';
+    } else if(text == "Menú"){
+        window.location = '../app/MenuUser.html';
+    }
+}
+```
+
+## Profile Menu Features
+
+The navigation menu includes profile-related options:
+
+<Tabs>
+  <Tab title="Configuración (Settings)">
+    Access to account configuration and preferences.
+    
+    ```html
+    <li><a href="">Configuración</a></li>
+    ```
+  </Tab>
+  
+  <Tab title="Datos personales (Personal Data)">
+    Direct access to personal information management.
+    
+    ```html
+    <li><a href="">Datos personales</a></li>
+    ```
+  </Tab>
+</Tabs>
+
+## Search Functionality
+
+The profile page maintains the global search feature:
+
+```html
+<form class="form-inline mt-2 mt-md-0">  
+    <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Search">
+    <button id="BotonBuscar" class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    <label for="Usuario">Usuario</label>
+    <img src="../img/Usuario.png" class="Usuario">
+</form>
+```
+
+## Calendar Widget
+
+The profile page includes a calendar widget in the sidebar:
+
+```html
+<div class="col-3">
+    <img src="../img/Calendario-Mensual-Septiembre-2019.jpg" class="Calendario">
+</div>
+```
+
+<Tip>
+  The calendar provides a quick view of upcoming events and helps you plan your gaming sessions.
+</Tip>
+
+## Profile Management Best Practices
+
+<Steps>
+  <Step title="Keep Information Updated">
+    Regularly update your email and personal information to ensure you receive important notifications.
+  </Step>
+  
+  <Step title="Secure Your Password">
+    Change your password periodically for account security.
+  </Step>
+  
+  <Step title="Check Notifications">
+    Review the notifications section regularly to stay informed about events and updates.
+  </Step>
+  
+  <Step title="Complete Your Profile">
+    Fill in all name fields for a complete profile that helps connect with other users.
+  </Step>
+</Steps>
+
+## Responsive Design
+
+The profile page uses Bootstrap's grid system for responsive layout:
+
+- **Desktop**: Two-column layout with calendar sidebar
+- **Mobile**: Stacked layout with collapsible navigation
+- **Forms**: Full-width inputs on mobile, two-column on desktop
+
+```html
+<div class="row">
+    <div class="col-3"><!-- Calendar --></div>
+    <div class="col-9"><!-- Profile content --></div>
+</div>
+```
+
+## Related Pages
+
+- [Authentication](/user-guide/authentication) - Login and account access
+- [Game Catalog](/user-guide/game-catalog) - Return to browsing games
+- [Events](/user-guide/events) - View and manage gaming events

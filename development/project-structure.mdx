@@ -1,0 +1,203 @@
+---
+title: Project Structure
+description: Understanding the file and folder organization of Pacto Lúdico
+---
+
+## Overview
+
+Pacto Lúdico follows a simple, flat directory structure optimized for Firebase Hosting. The project is organized into logical folders for HTML pages, styles, scripts, and assets.
+
+## Directory Layout
+
+```
+Pacto-Ludico/
+├── app/                    # Application pages
+│   ├── MenuAdmin.html     # Administrator menu
+│   ├── MenuUser.html      # User menu with game catalog
+│   └── Perfil.html        # User profile page
+├── css/                    # Stylesheets
+│   ├── styleIndex.css     # Login page styles
+│   ├── styleMenu.css      # Menu and catalog styles
+│   └── stylePerfil.css    # Profile page styles
+├── img/                    # Images and assets
+│   ├── Juegos/            # Game images by category
+│   │   ├── Ameritrash/
+│   │   ├── Cartas/
+│   │   ├── Dados/
+│   │   ├── Eurogames/
+│   │   ├── Fichas/
+│   │   ├── Filler/
+│   │   ├── Guerra/
+│   │   ├── Miniatura/
+│   │   ├── Party Games/
+│   │   ├── Rol/
+│   │   └── Tablero tradicional/
+│   ├── BOTON_INICIARSESION.png
+│   ├── Calendario-Mensual-Septiembre-2019.jpg
+│   ├── Usuario.png
+│   └── fondito1.jpg       # Background image
+├── js/                     # JavaScript files
+│   ├── appIndex.js        # Login logic
+│   ├── appMenu.js         # Menu and navigation logic
+│   ├── jquery-3.2.1.js    # jQuery library
+│   └── script.js          # Product filtering script
+├── index.html              # Login page (entry point)
+├── Registrar.html          # Registration page
+├── 404.html                # Custom error page
+├── firebase.json           # Firebase hosting config
+└── .firebaserc             # Firebase project config
+```
+
+## Core Files
+
+<AccordionGroup>
+  <Accordion title="index.html">
+    The application entry point with login functionality. Users authenticate here before accessing the main application.
+    
+    **Key Features:**
+    - User/Admin login form
+    - Radio button role selection
+    - Form validation with error styling
+    - Links to registration page
+  </Accordion>
+
+  <Accordion title="app/MenuUser.html">
+    The main user interface featuring the game catalog and event calendar.
+    
+    **Components:**
+    - Navigation menu with dropdowns
+    - Game catalog with category filtering
+    - Modal windows for game details
+    - Event calendar section
+    - Search functionality
+  </Accordion>
+
+  <Accordion title="app/MenuAdmin.html">
+    Administrator interface with additional management capabilities.
+    
+    **Capabilities:**
+    - User management
+    - Game insertion
+    - Full catalog access
+  </Accordion>
+
+  <Accordion title="app/Perfil.html">
+    User profile page for managing account information and preferences.
+  </Accordion>
+</AccordionGroup>
+
+## JavaScript Architecture
+
+<CardGroup cols={2}>
+  <Card title="appIndex.js" icon="lock">
+    Handles authentication logic with hardcoded credentials for demo purposes.
+    
+    **Functions:**
+    - `inicio()` - Validates credentials and redirects to appropriate menu
+    - Form validation with visual feedback
+  </Card>
+
+  <Card title="appMenu.js" icon="grid-2">
+    Manages menu visibility and page navigation.
+    
+    **Functions:**
+    - `RevelarDiv1()` - Show games catalog
+    - `RevelarDiv2()` - Show events
+    - `RevelarDiv3()` - Show users (admin)
+    - `RevelarDiv4()` - Show game insertion form
+    - `CambiarPagina()` - Handle page navigation
+  </Card>
+
+  <Card title="script.js" icon="filter">
+    Implements product filtering by category using jQuery.
+  </Card>
+
+  <Card title="jquery-3.2.1.js" icon="js">
+    jQuery library for DOM manipulation and event handling.
+  </Card>
+</CardGroup>
+
+## CSS Organization
+
+Each HTML page has its own stylesheet for separation of concerns:
+
+### styleIndex.css
+Login page styles including background, form elements, and error states.
+
+**Key Classes:**
+- `.Error` - Red border for invalid inputs
+- `.ErrorLabel` - Brown text for error messages
+- `.LabelUsado` - White text for active labels
+
+### styleMenu.css
+Comprehensive styles for the main application interface.
+
+**Key Components:**
+- Navigation menu (`.nav`)
+- Category list (`.category_list`)
+- Product grid (`.products-list`, `.product-item`)
+- Modal windows (`.modalmask`)
+- Responsive layout with Flexbox
+
+### stylePerfil.css
+Profile page specific styles.
+
+## Image Assets
+
+<Note>
+  Game images are organized in subdirectories by category (Ameritrash, Cartas, Dados, etc.) under `img/Juegos/`. This structure mirrors the category filtering system in the UI.
+</Note>
+
+### Asset Categories
+
+- **UI Elements**: Buttons, user icons, backgrounds
+- **Game Images**: Organized by 12 game categories
+- **Calendar**: Monthly event calendar image
+
+## Configuration Files
+
+<Steps>
+  <Step title="firebase.json">
+    Firebase Hosting configuration with public directory and ignore patterns.
+  </Step>
+  
+  <Step title=".firebaserc">
+    Maps the project to Firebase project ID `programacionweb2019-b79ba`.
+  </Step>
+  
+  <Step title=".gitignore">
+    Excludes Firebase cache, logs, and node_modules from version control.
+  </Step>
+</Steps>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Keep Structure Flat" icon="layer-group">
+    The shallow directory structure makes files easy to find and reference.
+  </Card>
+
+  <Card title="Organize by Type" icon="folder-tree">
+    Separating CSS, JS, and images into dedicated folders improves maintainability.
+  </Card>
+
+  <Card title="Descriptive Naming" icon="tag">
+    File names clearly indicate their purpose (styleMenu, appIndex, etc.).
+  </Card>
+
+  <Card title="Category-based Assets" icon="images">
+    Game images organized by category align with the UI filtering system.
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Firebase Setup" icon="fire" href="/development/firebase-setup">
+    Learn how to configure and deploy the application
+  </Card>
+
+  <Card title="Styling Guide" icon="palette" href="/development/styling">
+    Understand the CSS architecture and design system
+  </Card>
+</CardGroup>

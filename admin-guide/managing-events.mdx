@@ -1,0 +1,328 @@
+---
+title: Managing Events
+description: How to create, view, and manage gaming events in Pacto Lúdico
+---
+
+The event management system allows administrators to create and manage gaming events, while providing users with visibility into upcoming activities.
+
+## Accessing Event Management
+
+<Steps>
+  <Step title="Open Admin Dashboard">
+    Navigate to `/app/MenuAdmin.html`
+  </Step>
+  <Step title="Select Eventos Section">
+    Click the **Eventos** button to access event management
+  </Step>
+</Steps>
+
+## Event Interface
+
+The events section is controlled by the `RevelarDiv2()` function:
+
+```javascript
+function RevelarDiv2(){
+    Juegos.className=Juegos.className+" Oculto";
+    Eventos.className="Superpuesto";
+    Usuarios.className=Usuarios.className+" Oculto";
+    InsercionDeJuegos.className=InsercionDeJuegos+" Oculto";
+}
+```
+
+### Admin Event View
+
+In the admin dashboard:
+
+```html
+<div id="Div2" class="Superpuesto Oculto">
+    Eventos proximos
+</div>
+```
+
+### User Event View
+
+Regular users see events in their dashboard:
+
+```html
+<div id="Div2" class="Oculto">
+    <h6>Eventos proximos</h6>
+</div>
+```
+
+## Calendar Integration
+
+Both admin and user interfaces feature an integrated calendar sidebar for event reference:
+
+```html
+<div class="col-3">
+    <img src="../img/Calendario-Mensual-Septiembre-2019.jpg" class="Calendario">
+</div>
+```
+
+<Note>
+The calendar provides a visual reference for upcoming events and helps users plan their gaming sessions.
+</Note>
+
+## Event Dashboard Layout
+
+The events section uses a two-column layout:
+
+<CardGroup cols={2}>
+  <Card title="Calendar Sidebar (25%)" icon="calendar">
+    Monthly calendar view for quick date reference
+  </Card>
+  <Card title="Event List (75%)" icon="list">
+    Detailed listing of upcoming events
+  </Card>
+</CardGroup>
+
+## Creating Events
+
+As an administrator, you can create and manage events through the admin dashboard:
+
+### Event Planning Considerations
+
+<Steps>
+  <Step title="Event Type">
+    Determine the type of gaming event:
+    - Regular game nights
+    - Tournament events
+    - Special themed sessions
+    - Community meetups
+  </Step>
+  <Step title="Event Details">
+    Gather necessary information:
+    - Date and time
+    - Location or platform
+    - Games to be played
+    - Expected participant count
+  </Step>
+  <Step title="Event Creation">
+    Add the event through the admin interface
+  </Step>
+  <Step title="Announcement">
+    Notify users through the platform
+  </Step>
+</Steps>
+
+## Event Display Sections
+
+Events are accessible from multiple areas of the application:
+
+### Admin Dashboard - Eventos Button
+
+Accessible via the main navigation:
+
+```html
+<button onclick="RevelarDiv2()">Eventos</button>
+```
+
+### User Dashboard - Eventos Button
+
+Regular users also have event access:
+
+```html
+<button onclick="RevelarDiv2()" class="boton">Eventos</button>
+```
+
+## Event Visibility Toggle
+
+The interface uses CSS class manipulation to show/hide event sections:
+
+### Admin View Toggle
+
+```javascript
+var Eventos=document.getElementById('Div2');
+
+function RevelarDiv2(){
+    Eventos.className="Superpuesto"; // Make visible
+    // Hide other sections
+}
+```
+
+### User View Toggle
+
+Similar functionality for regular users viewing events:
+
+```javascript
+function RevelarDiv2(){
+    // Show events, hide games
+}
+```
+
+<Warning>
+When switching between sections, ensure you've saved any changes as the visibility toggle doesn't preserve unsaved form data.
+</Warning>
+
+## Event Categories
+
+Organize events by game categories to help users find relevant sessions:
+
+<CardGroup cols={3}>
+  <Card title="Ameritrash Events">
+    Theme-heavy game sessions
+  </Card>
+  <Card title="Eurogames Events">
+    Strategy game tournaments
+  </Card>
+  <Card title="Party Game Nights">
+    Casual group gaming sessions
+  </Card>
+  <Card title="RPG Sessions">
+    Role-playing game campaigns
+  </Card>
+  <Card title="Miniature Events">
+    Miniature wargaming events
+  </Card>
+  <Card title="Card Game Tournaments">
+    Competitive card game events
+  </Card>
+</CardGroup>
+
+## Calendar Management
+
+The calendar component provides visual event scheduling:
+
+### Calendar Features
+
+- Monthly view display
+- Visual date reference
+- Quick event lookup
+- Integration with event list
+
+### Calendar Location
+
+The calendar image is stored in:
+
+```
+/img/Calendario-Mensual-Septiembre-2019.jpg
+```
+
+<Note>
+Update the calendar image monthly to reflect current dates and scheduled events.
+</Note>
+
+## User Event Participation
+
+Users can interact with events through:
+
+### Event Discovery
+
+1. **Browse Events**: View upcoming events in the Eventos section
+2. **Check Calendar**: Reference the monthly calendar for dates
+3. **Event Details**: Click on events for more information
+
+### Event Types
+
+Different event types serve different purposes:
+
+| Event Type | Description | Typical Duration |
+|------------|-------------|------------------|
+| Game Night | Regular gaming sessions | 3-4 hours |
+| Tournament | Competitive events | Full day |
+| Workshop | Learning new games | 2-3 hours |
+| Campaign | Ongoing RPG sessions | Weekly/Bi-weekly |
+| Convention | Large community gathering | Multiple days |
+
+## Event Navigation
+
+Both sections are accessible through button controls:
+
+### Admin Event Access
+
+```html
+<p>
+    <button onclick="RevelarDiv1()">Juegos</button>
+    <button onclick="RevelarDiv2()">Eventos</button>
+    <button onclick="RevelarDiv3()">Consultar Usuarios</button>
+    <button onclick="RevelarDiv4()">Añadir Juegos</button>
+</p>
+```
+
+### User Event Access
+
+```html
+<div class="row">
+    <button onclick="RevelarDiv1()" class="boton">Juegos</button>
+    <button onclick="RevelarDiv2()" class="boton">Eventos</button>
+</div>
+```
+
+## Best Practices for Event Management
+
+<CardGroup cols={2}>
+  <Card title="Advance Notice" icon="clock">
+    Create events well in advance to give users time to plan
+  </Card>
+  <Card title="Clear Details" icon="info">
+    Provide comprehensive event information including location and requirements
+  </Card>
+  <Card title="Regular Updates" icon="refresh-cw">
+    Keep event information current and notify users of changes
+  </Card>
+  <Card title="Capacity Planning" icon="users">
+    Set appropriate participant limits based on venue or game requirements
+  </Card>
+</CardGroup>
+
+## Event Interface Integration
+
+The event system integrates with other platform features:
+
+### Integration Points
+
+<Steps>
+  <Step title="Game Catalog">
+    Link events to specific games in the catalog
+  </Step>
+  <Step title="User Profiles">
+    Track user event participation history
+  </Step>
+  <Step title="Calendar System">
+    Display events on the monthly calendar view
+  </Step>
+  <Step title="Notifications">
+    Send event reminders to registered participants
+  </Step>
+</Steps>
+
+## Event Workflow
+
+### For Administrators
+
+1. Access admin dashboard
+2. Click **Eventos** button
+3. Create new event
+4. Set event details
+5. Publish event
+6. Monitor registrations
+7. Send reminders
+8. Manage event day activities
+
+### For Users
+
+1. Navigate to user menu
+2. Click **Eventos** button  
+3. Browse upcoming events
+4. View event details
+5. Register for events
+6. Receive notifications
+7. Attend events
+
+<Note>
+The events interface uses the same JavaScript toggle system (`appMenu.js`) as other dashboard sections, ensuring consistent behavior across the platform.
+</Note>
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="Admin Overview" href="/admin-guide/overview">
+    Learn about admin dashboard features
+  </Card>
+  <Card title="Managing Users" href="/admin-guide/managing-users">
+    Manage event participants
+  </Card>
+  <Card title="Managing Games" href="/admin-guide/managing-games">
+    Link games to events
+  </Card>
+</CardGroup>

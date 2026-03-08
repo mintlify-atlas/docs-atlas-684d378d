@@ -1,0 +1,229 @@
+---
+title: Game Catalog
+description: Browse, search, and filter the board game collection in Pacto Lúdico
+---
+
+The game catalog is the heart of Pacto Lúdico, featuring an extensive collection of board games organized by categories with an intuitive filtering system.
+
+## Accessing the Catalog
+
+The game catalog is available on the main user menu (`MenuUser.html`) after logging in.
+
+<Steps>
+  <Step title="Navigate to Games Section">
+    Click the "Juegos" (Games) button to reveal the game catalog:
+    
+    ```html
+    <button onclick="RevelarDiv1()" class="boton">Juegos</button>
+    ```
+  </Step>
+  
+  <Step title="View Game Grid">
+    The catalog displays games in a responsive grid layout with game cover images and titles.
+  </Step>
+  
+  <Step title="Filter by Category">
+    Use the category navigation to filter games by type (see [Categories](/user-guide/categories) for details).
+  </Step>
+</Steps>
+
+## Catalog Interface
+
+The game catalog uses a dynamic filtering system built with jQuery:
+
+```html
+<div id="Div1" class="wrap Superpuesto">
+    <div class="store-wrapper">
+        <!-- Category Navigation -->
+        <div class="category_list">
+            <a href="#" class="category_item" category="all">Todo</a>
+            <a href="#" class="category_item" category="Ameritrash">Ameritrash</a>
+            <a href="#" class="category_item" category="Cartas">Cartas</a>
+            <!-- More categories... -->
+        </div>
+        
+        <!-- Game Grid -->
+        <section class="products-list">
+            <!-- Game items -->
+        </section>
+    </div>
+</div>
+```
+
+## Game Display
+
+Each game in the catalog is displayed as a card with:
+
+<CardGroup cols={2}>
+  <Card title="Game Image" icon="image">
+    High-quality cover art for visual identification
+  </Card>
+  
+  <Card title="Game Title" icon="heading">
+    Clickable title that opens detailed information
+  </Card>
+  
+  <Card title="Category Tag" icon="tag">
+    Hidden metadata used for filtering (e.g., Party, Cartas, Dados)
+  </Card>
+  
+  <Card title="Modal Details" icon="window-maximize">
+    Detailed game information in a modal popup
+  </Card>
+</CardGroup>
+
+### Game Card Structure
+
+```html
+<div class="product-item" category="Party">
+    <img src="../img/Juegos/Party Games/TheLandlordsGame.jpg" alt="">
+    <a href="#modal1">The Landlord's Game</a>
+    
+    <!-- Modal with game details -->
+    <div id="modal1" class="modalmask">
+        <div class="modalbox movedown">
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>The Landlord's Game</h2>
+            <p>Game description and details...</p>
+        </div>
+    </div>
+</div>
+```
+
+## Search Functionality
+
+The catalog includes a search bar in the navigation for quick game lookup:
+
+```html
+<form class="form-inline mt-2 mt-md-0">
+    <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Search">
+    <button id="BotonBuscar" class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+</form>
+```
+
+<Note>
+  The search functionality allows you to quickly find specific games by name without browsing through categories.
+</Note>
+
+## Category Filtering System
+
+The catalog uses an intelligent jQuery-based filtering system:
+
+```javascript
+$('.category_item').click(function(){
+    var catProduct = $(this).attr('category');
+    
+    // Add active class to selected category
+    $('.category_item').removeClass('ct_item-active');
+    $(this).addClass('ct_item-active');
+    
+    // Hide all products with animation
+    $('.product-item').css('transform', 'scale(0)');
+    function hideProduct(){
+        $('.product-item').hide();
+    } setTimeout(hideProduct, 400);
+    
+    // Show filtered products
+    function showProduct(){
+        $('.product-item[category="'+catProduct+'"]').show();
+        $('.product-item[category="'+catProduct+'"]').css('transform', 'scale(1)');
+    } setTimeout(showProduct, 400);
+});
+```
+
+## Featured Games in Catalog
+
+The catalog includes diverse games across all categories:
+
+<Tabs>
+  <Tab title="Party Games">
+    - The Landlord's Game
+    - GiftTRAP
+    - Monopoly
+  </Tab>
+  
+  <Tab title="Strategy Games">
+    - Descent (Ameritrash)
+    - Twilight Imperium (Ameritrash)
+    - Ave Cesar (Eurogames)
+    - Caylus (Eurogames)
+  </Tab>
+  
+  <Tab title="Card & Dice Games">
+    - Bang (Cartas)
+    - Baraja Española (Cartas)
+    - Parchís (Dados)
+    - Backgammon (Dados)
+  </Tab>
+  
+  <Tab title="Specialty Games">
+    - Dungeons & Dragons (Rol)
+    - Warhammer Fantasy (Miniaturas)
+    - El Señor de los Anillos (Miniaturas)
+    - BattleTech (Guerra)
+    - Risk (Guerra)
+  </Tab>
+</Tabs>
+
+## Game Details Modal
+
+Clicking on any game title opens a modal window with detailed information:
+
+<Accordion title="Modal Features">
+  - **Smooth animations**: The modal slides down or rotates into view
+  - **Game description**: Detailed information about gameplay
+  - **Close button**: Easy dismissal with the X button or clicking outside
+  - **Responsive design**: Works on all device sizes
+  
+  ```html
+  <div id="modal1" class="modalmask">
+      <div class="modalbox movedown">
+          <a href="#close" title="Close" class="close">X</a>
+          <h2>The Landlord's Game</h2>
+          <p>Game details and description...</p>
+      </div>
+  </div>
+  ```
+</Accordion>
+
+## View All Games
+
+Click the "Todo" (All) category to display the entire catalog:
+
+```javascript
+$('.category_item[category="all"]').click(function(){
+    function showAll(){
+        $('.product-item').show();
+        $('.product-item').css('transform', 'scale(1)');
+    } setTimeout(showAll, 400);
+});
+```
+
+## Catalog Organization
+
+Games are organized in the file system by category:
+
+```
+img/Juegos/
+├── Ameritrash/
+├── Cartas/
+├── Dados/
+├── Eurogames/
+├── Fichas/
+├── Filler/
+├── Guerra/
+├── Miniatura/
+├── Party Games/
+├── Rol/
+└── Tablero tradicional/
+```
+
+<Tip>
+  The catalog automatically activates the "All" category when first loaded, showing the complete collection by default.
+</Tip>
+
+## Related Pages
+
+- [Categories](/user-guide/categories) - Learn about game categories
+- [Events](/user-guide/events) - Discover gaming events
+- [Profile Management](/user-guide/profile-management) - Customize your experience

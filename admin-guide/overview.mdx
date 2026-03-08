@@ -1,0 +1,100 @@
+---
+title: Admin Dashboard Overview
+description: Introduction to the Pacto Lúdico admin dashboard and its key features
+---
+
+The Pacto Lúdico admin dashboard provides comprehensive tools for managing your board game collection platform. Administrators have access to specialized features for managing games, events, and users.
+
+## Dashboard Access
+
+The admin dashboard is accessed at `/app/MenuAdmin.html`. When logged in as an administrator, you'll see "Administrador" displayed in the navigation bar.
+
+<Note>
+Only users with administrator privileges can access the admin dashboard. Regular users are redirected to the standard user menu.
+</Note>
+
+## Dashboard Layout
+
+The admin interface features a clean, organized layout with:
+
+- **Navigation Bar**: Contains search functionality and profile options
+- **Calendar Sidebar**: Monthly calendar view for quick event reference
+- **Main Content Area**: Tabbed interface for different administrative functions
+
+## Core Admin Features
+
+The dashboard provides four main sections accessible via button navigation:
+
+<CardGroup cols={2}>
+  <Card title="Juegos" icon="gamepad">
+    Browse and manage the game catalog with category filtering
+  </Card>
+  <Card title="Eventos" icon="calendar">
+    View and manage upcoming gaming events
+  </Card>
+  <Card title="Consultar Usuarios" icon="users">
+    Access user management and user list
+  </Card>
+  <Card title="Añadir Juegos" icon="plus">
+    Add new games to the catalog by category
+  </Card>
+</CardGroup>
+
+## Navigation System
+
+The admin menu includes a dropdown selector for quick navigation:
+
+```html
+<select name="Opciones" id="Opciones">
+    <option value="1">Perfil</option>
+    <option value="2">Menú</option>
+</select>
+```
+
+This allows administrators to quickly switch between:
+- **Perfil**: User profile management
+- **Menú**: Return to main menu
+
+## Interface Controls
+
+The dashboard uses a tabbed content system implemented with JavaScript:
+
+```javascript
+function RevelarDiv1(){ // Show Games
+    Juegos.className="Superpuesto";
+    Eventos.className=Eventos.className+" Oculto";
+    Usuarios.className=Usuarios.className+" Oculto";
+    InsercionDeJuegos.className=InsercionDeJuegos+" Oculto";
+}
+```
+
+Each section is revealed by clicking its corresponding button, hiding other sections for a clean, focused interface.
+
+<Warning>
+Make sure to save any changes before switching between sections, as the interface uses CSS visibility toggling rather than preserving state.
+</Warning>
+
+## Search Functionality
+
+The navigation bar includes a search feature:
+
+```html
+<input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Search">
+<button id="BotonBuscar" class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+```
+
+Use this to quickly find games, users, or events across the platform.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Managing Games" href="/admin-guide/managing-games">
+    Learn how to manage the game catalog
+  </Card>
+  <Card title="Managing Events" href="/admin-guide/managing-events">
+    Create and manage gaming events
+  </Card>
+  <Card title="Managing Users" href="/admin-guide/managing-users">
+    User administration and permissions
+  </Card>
+</CardGroup>

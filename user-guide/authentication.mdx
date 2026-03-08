@@ -1,0 +1,143 @@
+---
+title: User Authentication
+description: Learn how to log in and register in Pacto Lúdico
+---
+
+Pacto Lúdico provides a straightforward authentication system for both regular users and administrators to access the platform.
+
+## Login Process
+
+The application uses a dual-authentication system that allows both users and administrators to log in through the same interface with role-based access.
+
+<Steps>
+  <Step title="Access the Login Page">
+    Navigate to the main page at `index.html` where you'll see the login interface with the "Iniciar Sesión" (Login) banner.
+  </Step>
+  
+  <Step title="Enter Your Credentials">
+    Provide your email and password in the respective fields:
+    
+    ```html
+    <input id="user" type="text" placeholder="Correo">
+    <input id="pass" type="password" placeholder="Contraseña">
+    ```
+  </Step>
+  
+  <Step title="Select Your Role">
+    Choose between **User** or **Administrator** access:
+    - **Usuario**: Regular user access to browse games, manage profile, and view events
+    - **Administrador**: Administrative access with additional privileges
+    
+    ```html
+    <input type="radio" name="Acceso" id="RadioUser">
+    <input type="radio" name="Acceso" id="RadioAdmin">
+    ```
+  </Step>
+  
+  <Step title="Sign In">
+    Click the "Ingresar" button to authenticate and access the platform.
+  </Step>
+</Steps>
+
+## Authentication Logic
+
+The login system validates credentials and redirects users based on their selected role:
+
+```javascript
+function inicio(){
+    if(user.value=="Ivan"&&pass.value=="war"&&RadioUser.checked){
+       window.location='app/MenuUser.html';
+    }else if(user.value=="Ivan"&&pass.value=="war"&&RadioAdmin.checked){
+        window.location='app/MenuAdmin.html';
+    }
+    // Error handling for invalid credentials
+    if(user.value!="Ivan"){
+        user.className="Error";
+    }
+    if(pass.value!="war"){
+        pass.className="Error";
+    }
+}
+```
+
+<Note>
+  The authentication flow validates both credentials and role selection before granting access to the appropriate dashboard.
+</Note>
+
+## Error Handling
+
+The system provides visual feedback for authentication errors:
+
+<Accordion title="Invalid Username or Password">
+  When incorrect credentials are entered, the input fields are highlighted with an error class to indicate which field contains invalid data.
+  
+  ```javascript
+  if(user.value!="Ivan"){
+      user.className="Error";
+  }
+  if(pass.value!="war"){
+      pass.className="Error";
+  }
+  ```
+</Accordion>
+
+<Accordion title="Missing Role Selection">
+  If no role is selected (User or Administrator), both radio button labels are highlighted:
+  
+  ```javascript
+  if(!RadioUser.checked&&!RadioAdmin.checked){
+      LabelUser.className="ErrorLabel";   
+      LabelAdmin.className="ErrorLabel";
+  }
+  ```
+</Accordion>
+
+## User Registration
+
+<CardGroup cols={2}>
+  <Card title="New Users" icon="user-plus">
+    If you don't have an account, click the registration link on the login page:
+    
+    ```html
+    <a href="app/Registrar.html">¿No se ha registrado? Registrese.</a>
+    ```
+  </Card>
+  
+  <Card title="Registration Form" icon="pen-to-square">
+    The registration page (`Registrar.html`) provides a simple form to create a new account with email and password fields.
+  </Card>
+</CardGroup>
+
+## Post-Authentication
+
+After successful authentication, users are redirected to their respective dashboards:
+
+<Tabs>
+  <Tab title="User Dashboard">
+    Regular users are directed to `MenuUser.html` where they can:
+    - Browse the game catalog
+    - Filter games by category
+    - View upcoming events
+    - Manage their profile
+  </Tab>
+  
+  <Tab title="Admin Dashboard">
+    Administrators are directed to `MenuAdmin.html` with additional capabilities:
+    - All user features
+    - User management
+    - Game catalog administration
+    - Event management
+  </Tab>
+</Tabs>
+
+## Security Considerations
+
+<Warning>
+  The current implementation uses client-side authentication for demonstration purposes. In a production environment, authentication should be handled server-side with proper password hashing, session management, and security tokens.
+</Warning>
+
+## Related Pages
+
+- [Profile Management](/user-guide/profile-management) - Manage your user profile
+- [Game Catalog](/user-guide/game-catalog) - Browse available games
+- [Events](/user-guide/events) - View upcoming gaming events

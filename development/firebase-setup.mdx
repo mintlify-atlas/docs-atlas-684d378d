@@ -1,0 +1,316 @@
+---
+title: Firebase Setup
+description: Configure Firebase Hosting and deploy Pacto Lúdico to the web
+---
+
+## Overview
+
+Pacto Lúdico uses Firebase Hosting for static web hosting with a simple configuration. This guide covers initial setup, configuration, and deployment workflows.
+
+## Prerequisites
+
+Before setting up Firebase, ensure you have:
+
+<CardGroup cols={2}>
+  <Card title="Firebase Account" icon="user">
+    A Google account with access to Firebase Console
+  </Card>
+
+  <Card title="Node.js & npm" icon="node-js">
+    Required for Firebase CLI installation
+  </Card>
+
+  <Card title="Firebase CLI" icon="terminal">
+    Install globally via npm
+  </Card>
+
+  <Card title="Source Code" icon="code">
+    The Pacto Lúdico project files
+  </Card>
+</CardGroup>
+
+## Installation
+
+<Steps>
+  <Step title="Install Firebase CLI">
+    Install the Firebase command-line tools globally:
+    
+    ```bash
+    npm install -g firebase-tools
+    ```
+    
+    Verify installation:
+    
+    ```bash
+    firebase --version
+    ```
+  </Step>
+
+  <Step title="Login to Firebase">
+    Authenticate with your Google account:
+    
+    ```bash
+    firebase login
+    ```
+    
+    This opens a browser window for authentication.
+  </Step>
+
+  <Step title="Initialize Firebase (Optional)">
+    If starting fresh, initialize Firebase in your project:
+    
+    ```bash
+    firebase init
+    ```
+    
+    Select **Hosting** when prompted. For Pacto Lúdico, the configuration is already set up.
+  </Step>
+</Steps>
+
+## Configuration Files
+
+### firebase.json
+
+The main Firebase configuration file defines hosting behavior:
+
+```json firebase.json
+{
+  "hosting": {
+    "public": "",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
+```
+
+<Note>
+  The `"public": ""` setting means Firebase serves files from the project root directory. All HTML, CSS, JS, and image files are directly accessible.
+</Note>
+
+**Configuration Options:**
+
+- **`public`**: Directory to deploy (empty string = root directory)
+- **`ignore`**: Files and patterns to exclude from deployment
+  - `firebase.json` - Configuration file itself
+  - `**/.*` - Hidden files (`.git`, `.gitignore`, etc.)
+  - `**/node_modules/**` - Node.js dependencies
+
+### .firebaserc
+
+Defines the Firebase project association:
+
+```json .firebaserc
+{
+  "projects": {
+    "default": "programacionweb2019-b79ba"
+  }
+}
+```
+
+**Purpose:**
+- Maps your local project to the Firebase project ID
+- Allows multiple project aliases (dev, staging, production)
+- The current project uses ID: `programacionweb2019-b79ba`
+
+## Deployment Workflow
+
+<Steps>
+  <Step title="Test Locally">
+    Preview your site locally before deploying:
+    
+    ```bash
+    firebase serve
+    ```
+    
+    Access at `http://localhost:5000`
+  </Step>
+
+  <Step title="Deploy to Firebase">
+    Deploy your application to Firebase Hosting:
+    
+    ```bash
+    firebase deploy
+    ```
+    
+    This uploads all files (except ignored patterns) to Firebase servers.
+  </Step>
+
+  <Step title="Verify Deployment">
+    Firebase returns a hosting URL after deployment:
+    
+    ```
+    ✔  Deploy complete!
+    
+    Project Console: https://console.firebase.google.com/project/programacionweb2019-b79ba/overview
+    Hosting URL: https://programacionweb2019-b79ba.web.app
+    ```
+  </Step>
+</Steps>
+
+## Deployment Commands
+
+<CodeGroup>
+```bash Full Deployment
+# Deploy everything (hosting, functions, etc.)
+firebase deploy
+```
+
+```bash Hosting Only
+# Deploy only hosting (faster for static sites)
+firebase deploy --only hosting
+```
+
+```bash Specific Project
+# Deploy to a specific Firebase project
+firebase deploy --project production
+```
+
+```bash Preview Changes
+# Create a preview URL without deploying
+firebase hosting:channel:deploy preview
+```
+</CodeGroup>
+
+## Directory Structure Impact
+
+Because `"public": ""` points to the root, your file structure directly maps to URLs:
+
+| File Path | URL |
+|-----------|-----|
+| `index.html` | `https://your-app.web.app/` |
+| `app/MenuUser.html` | `https://your-app.web.app/app/MenuUser.html` |
+| `css/styleMenu.css` | `https://your-app.web.app/css/styleMenu.css` |
+| `img/Usuario.png` | `https://your-app.web.app/img/Usuario.png` |
+
+<Note>
+  All relative paths in your HTML (like `href="css/styleIndex.css"`) work identically in production.
+</Note>
+
+## Custom Domain (Optional)
+
+<Steps>
+  <Step title="Add Custom Domain">
+    In Firebase Console, navigate to:
+    
+    **Hosting → Add custom domain**
+  </Step>
+
+  <Step title="Verify Ownership">
+    Add a TXT record to your DNS provider as instructed by Firebase.
+  </Step>
+
+  <Step title="Configure DNS">
+    Point your domain to Firebase with an A record:
+    
+    ```
+    A record: 151.101.1.195
+    A record: 151.101.65.195
+    ```
+  </Step>
+
+  <Step title="Wait for SSL">
+    Firebase automatically provisions an SSL certificate (may take up to 24 hours).
+  </Step>
+</Steps>
+
+## Version Control Integration
+
+The `.gitignore` file excludes Firebase-specific files:
+
+```gitignore
+# Firebase cache
+.firebase/
+
+# Firebase logs
+firebase-debug.log*
+```
+
+**Files to commit:**
+- `firebase.json` ✅
+- `.firebaserc` ✅ (or gitignore for multi-developer teams)
+
+**Files to exclude:**
+- `.firebase/` ❌ (build cache)
+- `firebase-debug.log` ❌ (debugging output)
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="404 Errors After Deployment">
+    **Problem:** Pages return 404 errors.
+    
+    **Solution:** Check that `"public": ""` points to the correct directory. Verify file paths are correct and files aren't in `.gitignore` patterns.
+  </Accordion>
+
+  <Accordion title="Old Content Still Showing">
+    **Problem:** Changes don't appear after deployment.
+    
+    **Solution:** 
+    1. Clear browser cache (Ctrl+Shift+R)
+    2. Check Firebase Console to verify deployment time
+    3. Wait a few minutes for CDN propagation
+  </Accordion>
+
+  <Accordion title="Permission Denied">
+    **Problem:** `Error: HTTP Error: 403, Permission denied`
+    
+    **Solution:**
+    1. Run `firebase login` to re-authenticate
+    2. Verify you have Editor/Owner role in Firebase Console
+    3. Check `.firebaserc` has correct project ID
+  </Accordion>
+
+  <Accordion title="Ignored Files Being Deployed">
+    **Problem:** Unwanted files appear in deployment.
+    
+    **Solution:** Add patterns to the `ignore` array in `firebase.json`:
+    
+    ```json
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "**/*.md",
+      "**/.DS_Store"
+    ]
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Firebase SDK Integration
+
+The project references Firebase SDK in `index.html`:
+
+```html
+<script src="/__/firebase/7.1.0/firebase-app.js"></script>
+```
+
+<Note>
+  The `/__/firebase/` path is a special Firebase Hosting route that automatically serves the correct SDK version and configuration.
+</Note>
+
+## Monitoring & Analytics
+
+Access deployment history and analytics:
+
+1. **Firebase Console** → Your Project → Hosting
+2. View:
+   - Deployment history
+   - Traffic analytics
+   - Performance metrics
+   - Usage quotas
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Project Structure" icon="folder-tree" href="/development/project-structure">
+    Understand the file organization
+  </Card>
+
+  <Card title="Customization" icon="paintbrush" href="/development/customization">
+    Learn how to customize the platform
+  </Card>
+</CardGroup>

@@ -1,0 +1,297 @@
+---
+title: Game Categories
+description: Understanding the 12 game categories in Pacto Lúdico's classification system
+---
+
+Pacto Lúdico organizes its board game collection into 12 distinct categories, making it easy to find games that match your preferences and play style.
+
+## Category Overview
+
+The platform categorizes games based on mechanics, components, and gameplay style:
+
+```html
+<div class="category_list">
+    <a href="#" class="category_item" category="all">Todo</a>
+    <a href="#" class="category_item" category="Ameritrash">Ameritrash</a>
+    <a href="#" class="category_item" category="Cartas">Cartas</a>
+    <a href="#" class="category_item" category="Dados">Dados</a>
+    <a href="#" class="category_item" category="Eurogames">Eurogames</a>
+    <a href="#" class="category_item" category="Fichas">Fichas</a>
+    <a href="#" class="category_item" category="Filler">Filler</a>
+    <a href="#" class="category_item" category="Guerra">Guerra</a>
+    <a href="#" class="category_item" category="Miniatura">Miniaturas</a>
+    <a href="#" class="category_item" category="Party">Party Games</a>
+    <a href="#" class="category_item" category="Rol">Rol</a>
+    <a href="#" class="category_item" category="Tradicional">Tablero tradicionales</a>
+</div>
+```
+
+## The 12 Categories
+
+### Strategy & Design Style
+
+<CardGroup cols={2}>
+  <Card title="Ameritrash" icon="dragon">
+    **Characteristics**: Thematic, narrative-driven games with strong emphasis on story, conflict, and luck
+    
+    **Example Games**:
+    - Descent
+    - Twilight Imperium
+    
+    **Typical Features**:
+    - Rich thematic elements
+    - Player conflict
+    - Dice-based combat
+    - Asymmetric gameplay
+  </Card>
+  
+  <Card title="Eurogames" icon="chess-knight">
+    **Characteristics**: Strategic games emphasizing resource management, efficiency, and minimal luck
+    
+    **Example Games**:
+    - Ave Cesar
+    - Caylus
+    
+    **Typical Features**:
+    - Economic optimization
+    - Low player conflict
+    - Victory points
+    - Strategic depth
+  </Card>
+</CardGroup>
+
+### Component-Based Categories
+
+<Tabs>
+  <Tab title="Cartas (Cards)">
+    Games where cards are the primary game component.
+    
+    **Featured Games**:
+    - **Bang**: Wild West themed card game
+    - **Baraja Española**: Traditional Spanish deck games
+    
+    **Category Identifier**: `category="Cartas"`
+    
+    ```html
+    <div class="product-item" category="Cartas">
+        <img src="../img/Juegos/Cartas/Bang.png" alt="">
+        <a href="#modal3">Bang</a>
+    </div>
+    ```
+  </Tab>
+  
+  <Tab title="Dados (Dice)">
+    Games centered around dice rolling mechanics.
+    
+    **Featured Games**:
+    - **Parchís**: Classic race game
+    - **Backgammon**: Ancient board game
+    
+    **Category Identifier**: `category="Dados"`
+    
+    ```html
+    <div class="product-item" category="Dados">
+        <img src="../img/Juegos/Dados/Parchis.jpg" alt="">
+        <a href="#modal2">Parchis</a>
+    </div>
+    ```
+  </Tab>
+  
+  <Tab title="Fichas (Tiles/Tokens)">
+    Games using tiles or tokens as primary components.
+    
+    **Featured Games**:
+    - **Dominó**: Classic tile-matching game
+    - **Mahjong**: Traditional Chinese game
+    
+    **Category Identifier**: `category="Fichas"`
+  </Tab>
+  
+  <Tab title="Miniaturas (Miniatures)">
+    Games featuring miniature figures.
+    
+    **Featured Games**:
+    - **El Señor de los Anillos**: LOTR miniature battles
+    - **Warhammer Fantasy**: Epic fantasy warfare
+    
+    **Category Identifier**: `category="Miniatura"`
+  </Tab>
+</Tabs>
+
+### Genre-Based Categories
+
+<Accordion title="Guerra (War Games)">
+  Military simulation and strategic warfare games.
+  
+  **Featured Games**:
+  - **BattleTech**: Mech combat simulation
+  - **Risk**: Global domination strategy
+  
+  **Characteristics**:
+  - Military themes
+  - Strategic combat
+  - Territory control
+  - Tactical decision-making
+  
+  ```html
+  <div class="product-item" category="Guerra">
+      <img src="../img/Juegos/Guerra/BattleTech.jpg" alt="">
+      <a href="#modal8">BattleTech</a>
+  </div>
+  ```
+</Accordion>
+
+<Accordion title="Rol (Role-Playing Games)">
+  Games focused on character development and storytelling.
+  
+  **Featured Games**:
+  - **Dungeons & Dragons**: The classic fantasy RPG
+  
+  **Characteristics**:
+  - Character creation
+  - Narrative gameplay
+  - Campaign progression
+  - Game master led
+  
+  ```html
+  <div class="product-item" category="Rol">
+      <img src="../img/Juegos/Rol/Dungeons_Dragons.jpg" alt="">
+      <a href="#modal11">Dungeons & Dragons</a>
+  </div>
+  ```
+</Accordion>
+
+### Social & Casual Categories
+
+<CardGroup cols={2}>
+  <Card title="Party Games" icon="users">
+    Social games designed for large groups and casual play.
+    
+    **Featured Games**:
+    - The Landlord's Game
+    - GiftTRAP
+    - Monopoly
+    
+    **Category Identifier**: `category="Party"`
+    
+    **Perfect For**:
+    - Large gatherings
+    - Casual gamers
+    - Social interaction
+    - Quick to learn
+  </Card>
+  
+  <Card title="Filler" icon="clock">
+    Short, light games played between longer sessions.
+    
+    **Featured Games**:
+    - Dixit
+    
+    **Category Identifier**: `category="Filler"`
+    
+    **Perfect For**:
+    - Quick play sessions (15-30 minutes)
+    - Waiting for players
+    - Light entertainment
+    - Palate cleansers between heavy games
+  </Card>
+</CardGroup>
+
+### Classic Games
+
+<Card title="Tablero Tradicionales (Traditional Board Games)" icon="table-cells">
+  Classic and traditional board games with historical significance.
+  
+  **Featured Games**:
+  - **Xiangqi**: Chinese chess
+  
+  **Category Identifier**: `category="Tradicional"`
+  
+  **Characteristics**:
+  - Historical games
+  - Cultural significance
+  - Classic mechanics
+  - Timeless appeal
+  
+  ```html
+  <div class="product-item" category="Tradicional">
+      <img src="../img/Juegos/Tablero tradicional/Xiangqi.jpg" alt="">
+      <a href="#modal20">Xiangqi</a>
+  </div>
+  ```
+</Card>
+
+## How Filtering Works
+
+When you click a category, the system filters games using jQuery:
+
+```javascript
+$('.category_item').click(function(){
+    var catProduct = $(this).attr('category');
+    
+    // Mark selected category as active
+    $('.category_item').removeClass('ct_item-active');
+    $(this).addClass('ct_item-active');
+    
+    // Hide all games
+    $('.product-item').css('transform', 'scale(0)');
+    $('.product-item').hide();
+    
+    // Show only games in selected category
+    $('.product-item[category="'+catProduct+'"]').show();
+    $('.product-item[category="'+catProduct+'"]').css('transform', 'scale(1)');
+});
+```
+
+<Note>
+  The filtering system uses CSS transforms for smooth animations, scaling games down when hiding and up when showing.
+</Note>
+
+## Category Distribution
+
+The catalog currently includes games across all 12 categories:
+
+| Category | Spanish Name | Example Count |
+|----------|--------------|---------------|
+| All | Todo | 20 games |
+| Ameritrash | Ameritrash | 2 games |
+| Cards | Cartas | 2 games |
+| Dice | Dados | 2 games |
+| Eurogames | Eurogames | 2 games |
+| Tiles/Tokens | Fichas | 2 games |
+| Filler | Filler | 1 game |
+| War | Guerra | 2 games |
+| Miniatures | Miniaturas | 2 games |
+| Party | Party Games | 3 games |
+| RPG | Rol | 1 game |
+| Traditional | Tablero tradicionales | 1 game |
+
+## Using Categories
+
+<Steps>
+  <Step title="View All Categories">
+    The category navigation appears above the game grid in the Juegos section.
+  </Step>
+  
+  <Step title="Select a Category">
+    Click any category name to filter the collection.
+  </Step>
+  
+  <Step title="Visual Feedback">
+    The selected category receives the `ct_item-active` class for visual indication.
+  </Step>
+  
+  <Step title="View Results">
+    Games animate smoothly, showing only those matching the selected category.
+  </Step>
+</Steps>
+
+<Tip>
+  Click "Todo" (All) at any time to return to viewing the complete collection.
+</Tip>
+
+## Related Pages
+
+- [Game Catalog](/user-guide/game-catalog) - Browse the full collection
+- [Events](/user-guide/events) - Find gaming events by category
+- [Profile Management](/user-guide/profile-management) - Save favorite categories

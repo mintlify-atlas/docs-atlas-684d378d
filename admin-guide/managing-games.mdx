@@ -1,0 +1,238 @@
+---
+title: Managing Games
+description: How to browse, add, and manage games in the Pacto Lúdico catalog
+---
+
+The game management system allows administrators to maintain the board game catalog, including browsing by category and adding new games.
+
+## Accessing Game Management
+
+<Steps>
+  <Step title="Open Admin Dashboard">
+    Navigate to the admin menu at `/app/MenuAdmin.html`
+  </Step>
+  <Step title="Select Juegos Section">
+    Click the **Juegos** button to reveal the game catalog interface
+  </Step>
+</Steps>
+
+## Game Catalog Structure
+
+The game catalog is organized with a two-column layout:
+
+```html
+<div id="Div1" class="SuperPuesto">
+    <div class="col-3">Categoria</div>
+    <div class="col-9">Lista de Juegos</div>
+</div>
+```
+
+- **Left Column (25%)**: Category filter navigation
+- **Right Column (75%)**: Game display grid
+
+## Game Categories
+
+Pacto Lúdico supports 12 distinct board game categories:
+
+<CardGroup cols={3}>
+  <Card title="Ameritrash">
+    Theme-heavy games with dramatic elements
+  </Card>
+  <Card title="Cartas">
+    Card-based games
+  </Card>
+  <Card title="Dados">
+    Dice games
+  </Card>
+  <Card title="Eurogames">
+    Strategy-focused European-style games
+  </Card>
+  <Card title="Fichas">
+    Tile and token games
+  </Card>
+  <Card title="Filler">
+    Quick, light games
+  </Card>
+  <Card title="Guerra">
+    War and conflict games
+  </Card>
+  <Card title="Miniatura">
+    Miniature-based games
+  </Card>
+  <Card title="Party">
+    Party games for groups
+  </Card>
+  <Card title="Rol">
+    Role-playing games
+  </Card>
+  <Card title="Tradicional">
+    Traditional board games
+  </Card>
+</CardGroup>
+
+## Category Filtering
+
+The user interface implements dynamic category filtering using jQuery:
+
+```javascript
+// Filter products by category
+$('.category_item').click(function(){
+    var catProduct = $(this).attr('category');
+    
+    // Hide all products with animation
+    $('.product-item').css('transform', 'scale(0)');
+    setTimeout(function(){
+        $('.product-item').hide();
+    }, 400);
+    
+    // Show filtered products
+    setTimeout(function(){
+        $('.product-item[category="'+catProduct+'"]').show();
+        $('.product-item[category="'+catProduct+'"]').css('transform', 'scale(1)');
+    }, 400);
+});
+```
+
+This creates a smooth animation effect when switching between categories.
+
+## Viewing All Games
+
+Click the **"Todo"** category to display all games:
+
+```javascript
+$('.category_item[category="all"]').click(function(){
+    setTimeout(function(){
+        $('.product-item').show();
+        $('.product-item').css('transform', 'scale(1)');
+    }, 400);
+});
+```
+
+## Game Display Format
+
+Each game in the catalog is displayed as a product item with:
+
+- Game image thumbnail
+- Game title as clickable link
+- Modal dialog for detailed information
+
+### Example Game Entry
+
+```html
+<div class="product-item" category="Party">
+    <img src="../img/Juegos/Party Games/Monopoly.jpg" alt="">
+    <a href="#modal19">Monopoly</a>
+    <div id="modal19" class="modalmask">
+        <div class="modalbox rotate">
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>Monopoly</h2>
+            <p>Game description and details...</p>
+        </div>
+    </div>
+</div>
+```
+
+## Adding New Games
+
+<Steps>
+  <Step title="Click Añadir Juegos">
+    Select the **Añadir Juegos** button in the admin dashboard
+  </Step>
+  <Step title="Access Add Game Form">
+    The interface reveals the game addition section:
+    ```html
+    <div id="Div4" class="Superpuesto Oculto">
+        Opciones para añadir juegos por categoria y tales :P
+    </div>
+    ```
+  </Step>
+  <Step title="Enter Game Details">
+    Fill in the required information including:
+    - Game title
+    - Category selection
+    - Game image
+    - Description
+  </Step>
+</Steps>
+
+<Note>
+The add game functionality is managed through the `RevelarDiv4()` function which toggles the visibility of the game addition form.
+</Note>
+
+## Sample Games in Catalog
+
+The platform includes various popular games across categories:
+
+| Category | Example Games |
+|----------|---------------|
+| Ameritrash | Descent, Twilight Imperium |
+| Cartas | Bang, Baraja Española |
+| Dados | Parchis, Backgammon |
+| Eurogames | Ave Cesar, Caylus |
+| Fichas | Domino, Mahjong |
+| Filler | Dixit |
+| Guerra | BattleTech, Risk |
+| Miniatura | El Señor de los Anillos, Warhammer Fantasy |
+| Party | The Landlord's Game, GiftTRAP, Monopoly |
+| Rol | Dungeons & Dragons |
+| Tradicional | Xiangqi |
+
+## Game Modal Dialogs
+
+Clicking on any game opens a modal with detailed information:
+
+```html
+<div id="modal1" class="modalmask">
+    <div class="modalbox movedown">
+        <a href="#close" title="Close" class="close">X</a>
+        <h2>Game Title</h2>
+        <p>Detailed game description</p>
+        <p>Additional game information</p>
+    </div>
+</div>
+```
+
+Different modal animation effects are used:
+- `movedown`: Slides down from top
+- `rotate`: Rotates into view
+- `resize`: Scales up from center
+
+<Warning>
+Ensure all game images are properly stored in the `/img/Juegos/` directory structure organized by category before adding them to the catalog.
+</Warning>
+
+## Image Organization
+
+Game images should be organized in the following directory structure:
+
+```
+/img/Juegos/
+├── Ameritrash/
+├── Cartas/
+├── Dados/
+├── Eurogames/
+├── Fichas/
+├── Filler/
+├── Guerra/
+├── Miniatura/
+├── Party Games/
+├── Rol/
+└── Tablero tradicional/
+```
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Categorization" icon="tag">
+    Assign games to the most appropriate primary category for better discoverability
+  </Card>
+  <Card title="Image Quality" icon="image">
+    Use consistent image dimensions and quality for a professional appearance
+  </Card>
+  <Card title="Descriptions" icon="file-text">
+    Provide clear, informative descriptions in modal dialogs
+  </Card>
+  <Card title="Updates" icon="refresh-cw">
+    Regularly review and update game information to keep content current
+  </Card>
+</CardGroup>
