@@ -1,0 +1,67 @@
+{
+  "projectType": "frontend",
+  "projectName": "Pacto Lúdico",
+  "projectDescription": "A web platform for managing and exploring board game collections with user profiles, game catalog, and event calendar.",
+  "theme": "almond",
+  "primaryColor": "#2D3E50",
+  "lightColor": "#E84C3D",
+  "darkColor": null,
+  "navigation": {
+    "groups": [
+      {
+        "group": "Getting Started",
+        "pages": [
+          "introduction",
+          "quickstart",
+          "installation"
+        ]
+      },
+      {
+        "group": "User Guide",
+        "pages": [
+          "user-guide/authentication",
+          "user-guide/game-catalog",
+          "user-guide/categories",
+          "user-guide/profile-management",
+          "user-guide/events"
+        ]
+      },
+      {
+        "group": "Admin Guide",
+        "pages": [
+          "admin-guide/overview",
+          "admin-guide/managing-games",
+          "admin-guide/managing-users",
+          "admin-guide/managing-events"
+        ]
+      },
+      {
+        "group": "Development",
+        "pages": [
+          "development/project-structure",
+          "development/firebase-setup",
+          "development/styling",
+          "development/customization"
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "User and admin authentication system",
+    "Board game catalog with 12+ categories",
+    "Game search and filtering by category",
+    "User profile management",
+    "Event calendar integration",
+    "Firebase hosting deployment"
+  ],
+  "publicApiSurface": [
+    "Login page (index.html)",
+    "User registration (Registrar.html)",
+    "User menu (MenuUser.html)",
+    "Admin menu (MenuAdmin.html)",
+    "User profile (Perfil.html)",
+    "Game categories: Ameritrash, Cards, Dice, Eurogames, Miniatures, Party Games, Role-playing, Traditional",
+    "Authentication functions (inicio)",
+    "Navigation functions (CambiarPagina, RevelarDiv1-4)"
+  ]
+}
